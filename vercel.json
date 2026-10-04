@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/InternCircle_virtual_internship/portfolio/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/InternCircle_virtual_internship/portfolio/$1"
+    }
+  ]
+}
