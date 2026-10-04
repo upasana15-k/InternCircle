@@ -1,0 +1,27 @@
+﻿# Node
+node_modules/
+npm-debug.log*
+dist/
+build/
+.next/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+venv/
+.env
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Archives
+*.zip
+*.tar.gz
+*.rar

@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aurora">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Upasana Kudape — Computer Science Undergrad & Software Developer</title>
+    <meta name="description"
+        content="Portfolio of Upasana Kudape, a Computer Science student at Jabalpur Engineering College specializing in Edge AI, Computer Vision, Full-Stack Development, and Systems Engineering.">
+    <meta name="keywords"
+        content="Upasana Kudape, Software Developer, Computer Science, Jabalpur Engineering College, React, MediaPipe, Python, Computer Vision, Scapy, Portfolio">
+    <meta name="author" content="Upasana Kudape">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Scroll Progress Bar -->
+    <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
+
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="custom-cursor-outline" id="cursorOutline" aria-hidden="true"></div>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header class="site-header" id="siteHeader">
+
+        <nav class="navbar" aria-label="Main Navigation">
+
+            <a href="#home" class="logo" aria-label="Upasana Kudape Home">
+                upasana<span class="logo-dot">.</span>
+            </a>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#work" class="nav-item">Work</a>
+                <a href="#experience" class="nav-item">Experience</a>
+                <a href="#skills" class="nav-item">Skills</a>
+                <a href="#education" class="nav-item">Education</a>
+                <a href="#certificates" class="nav-item">Certificates</a>
+                <a href="#about" class="nav-item">About</a>
+                <a href="#contact" class="nav-cta">Contact</a>
+            </div>
+
+            <div class="nav-controls">
+                <!-- Command Palette Trigger Button -->
+                <button class="cmd-trigger-btn" id="cmdTriggerBtn" type="button" aria-label="Open Command Palette (Ctrl+K)" title="Open Command Palette (Ctrl+K)">
+                    <span class="cmd-icon">⌘</span>
+                    <span class="cmd-key">K</span>
+                </button>
+
+                <!-- Theme Picker -->
+                <div class="theme-picker-wrapper" id="themePickerWrapper">
+                    <button class="theme-picker-btn" id="themePickerBtn" type="button" aria-label="Change Theme" title="Choose a Theme" aria-haspopup="true" aria-expanded="false">
+                        <span class="theme-swatch-dot" id="themeSwatchDot"></span>
+                        <span id="themePickerLabel">Theme</span>
+                        <span style="font-size:0.65rem; opacity:0.6;">▾</span>
+                    </button>
+
+                    <!-- Theme Picker Dropdown Panel -->
+                    <div class="theme-picker-panel" id="themePickerPanel" role="menu" aria-label="Theme options">
+                        <span class="theme-picker-label">✦ Choose your aesthetic</span>
+                        <div class="theme-options-list" id="themeOptionsList">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio Haptics Toggle -->
+                <button class="audio-toggle-btn" id="audioToggleBtn" type="button" aria-label="Toggle Audio Effects" title="Sound Effects (On/Off)">
+                    <span class="audio-icon audio-on">🔊</span>
+                    <span class="audio-icon audio-off">🔇</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button class="menu-button" id="menuToggle" type="button" aria-label="Toggle navigation menu"
+                    aria-expanded="false">
+                    <span class="menu-text">Menu</span>
+                    <span class="menu-icon-bars">
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+        <div class="mobile-drawer-content">
+            <div class="mobile-drawer-header">
+                <span class="drawer-logo">upasana.</span>
+                <button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu">&times;</button>
+            </div>
+            <div class="mobile-nav-list">
+                <a href="#home" class="mobile-nav-link"><span>00</span> Home</a>
+                <a href="#about" class="mobile-nav-link"><span>01</span> About</a>
+                <a href="#work" class="mobile-nav-link"><span>02</span> Selected Work</a>
+                <a href="#experience" class="mobile-nav-link"><span>03</span> Experience</a>
+                <a href="#skills" class="mobile-nav-link"><span>04</span> Technical Skills</a>
+                <a href="#education" class="mobile-nav-link"><span>05</span> Education</a>
+                <a href="#certificates" class="mobile-nav-link"><span>06</span> Certificates</a>
+                <a href="#contact" class="mobile-nav-link"><span>07</span> Contact</a>
+            </div>
+            <div class="mobile-drawer-footer">
+                <p>0201cs231108@gmail.com</p>
+                <div class="mobile-socials">
+                    <a href="https://github.com/upasana15-k" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <main>
+
+        <!-- =========================
+             HERO SECTION WITH INTERACTIVE VISION CANVAS
+        ========================== -->
+
+        <section class="hero" id="home">
+
+            <!-- Interactive Background Canvas: Pose Landmarks & Network Nodes -->
+            <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+
+            <div class="hero-content">
+
+                <div class="status-badge" data-magnetic>
+                    <span class="status-dot"></span>
+                    <span>CS UNDERGRAD · JABALPUR ENGINEERING COLLEGE ('27)</span>
+                </div>
+
+                <p class="eyebrow">
+                    HELLO, I'M UPASANA KUDAPE
+                </p>
+
+                <h1 class="hero-title">
+                    ENGINEERING
+                    <br>
+                    <span class="text-gradient">INTELLIGENT</span>
+                    <br>
+                    SYSTEMS.
+                </h1>
+
+                <p class="hero-description">
+                    Software engineer and Computer Science undergraduate building at the intersection of
+                    <strong>Edge AI & Computer Vision</strong>, <strong>Full-Stack Architecture</strong>,
+                    and <strong>Network Infrastructure</strong>.
+                </p>
+
+                <div class="hero-meta-badges">
+                    <span class="meta-pill">📍 Jabalpur, MP, India</span>
+                    <span class="meta-pill">⚡ B.Tech CSE (2023–2027)</span>
+                    <span class="meta-pill">🛠️ React 18 · Python · MediaPipe · Scapy</span>
+                </div>
+
+                <div class="hero-actions">
+
+                    <a href="#work" class="btn-primary" id="btnSeeWork" data-magnetic>
+                        <span>Explore Projects</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+
+                    <a href="#experience" class="btn-secondary" data-magnetic>
+                        <span>Experience & Roles</span>
+                    </a>
+
+                    <button class="btn-ghost" id="heroCmdBtn" type="button" data-magnetic>
+                        <span>Command Center (⌘K)</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual" aria-hidden="false">
+
+                <div class="hero-photo-card tilt-card" id="heroTiltCard">
+                    <!-- Photo -->
+                    <div class="hero-photo-wrap">
+                        <img src="assets/images/myself.jpeg" alt="Upasana Kudape" class="hero-photo-img" loading="eager">
+                        <div class="hero-photo-glow"></div>
+                    </div>
+                    <!-- Floating badge top-left -->
+                    <div class="hero-photo-badge">CS + AI CORE</div>
+                    <!-- HUD strip bottom -->
+                    <div class="hero-photo-hud">
+                        <span class="hud-item">UPASANA K.</span>
+                        <span class="hud-item">JEC · '27</span>
+                    </div>
+                    <!-- Decor dots -->
+                    <div class="hero-object-decor-grid">
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="scroll-indicator">
+                <a href="#about" aria-label="Scroll to about section">
+                    <span class="scroll-mouse"><span class="scroll-wheel"></span></span>
+                    <span class="scroll-text">Scroll to explore</span>
+                </a>
+            </div>
+
+        </section>
+
+
+       
+
+        <!-- =========================
+             ABOUT SECTION
+        ========================== -->
+
+        <section class="intro reveal-section" id="about">
+
+            <span class="section-number">
+                01 / ABOUT
+            </span>
+
+            <div class="intro-content">
+
+                <h2>
+                    I LIKE BRIDGING
+                    DEEP ALGORITHMS
+                    WITH SEAMLESS UX.
+                </h2>
+
+                <div class="intro-grid">
+                    <div class="intro-bio">
+                        <p>
+                            I'm a Computer Science & Engineering undergraduate at <strong>Jabalpur Engineering College (2023 – 2027)</strong>. My work focuses on solving tangible engineering challenges through <strong>high-performance edge AI</strong>, <strong>scalable web architectures</strong>, and <strong>network tools</strong>.
+                        </p>
+                        <p>
+                            From architecting debounced computer vision pipelines with MediaPipe and WebAssembly to writing Python network discovery scripts for enterprise subnet diagnostics at Vehicle Factory Jabalpur (VFJ), I strive to create software that is mathematically sound, responsive, and intuitive.
+                        </p>
+                        
+                        <div class="bio-actions">
+                            <a href="#contact" class="link-inline">Have a project or internship? Let's talk ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="intro-highlights">
+                        <div class="highlight-card tilt-card">
+                            <span class="highlight-label">ACADEMIC FOUNDATION</span>
+                            <strong>B.Tech in CSE</strong>
+                            <p>Jabalpur Engineering College (2023–2027)</p>
+                            <span class="card-pill">Core CS Fundamentals</span>
+                        </div>
+                        <div class="highlight-card tilt-card">
+                            <span class="highlight-label">ENGINEERING FOCUS</span>
+                            <strong>Edge Vision & Systems</strong>
+                            <p>Computer Vision, REST APIs & Distributed Subnets</p>
+                            <span class="card-pill">Wasm · Scapy · React</span>
+                        </div>
+                        <div class="highlight-card tilt-card">
+                            <span class="highlight-label">LEADERSHIP & OPEN SOURCE</span>
+                            <strong>JLUG & E-Cell Core</strong>
+                            <p>Community Leadership & Technical Operations</p>
+                            <span class="card-pill">Community Contributor</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SELECTED WORK (PROJECTS CAROUSEL & INSPECTOR)
+        ========================== -->
+
+        <section class="work reveal-section" id="work">
+
+            <div class="work-inner">
+
+                <!-- WORK HEADER -->
+
+                <div class="work-top">
+
+                    <div>
+
+                        <span class="section-number">
+                            02 / SELECTED WORK
+                        </span>
+
+                        <h2>
+                            Featured
+                            <br>
+                            Projects.
+                        </h2>
+
+                    </div>
+
+                    <div class="work-top-right">
+                        <p class="work-description">
+                            Deep-dive engineering projects spanning edge computer vision, automated posture feedback, network asset discovery, and high-performance web systems.
+                        </p>
+                        <span class="work-counter-badge" id="workCounterBadge">Interactive Carousel (4 Projects)</span>
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     PROJECT CAROUSEL
+                ================================== -->
+
+                <div class="project-carousel" aria-roledescription="carousel">
+
+                    <div class="project-track" id="projectTrack">
+
+
+                        <!-- =================================
+                             PROJECT 01: DefNet
+                        ================================== -->
+
+                        <article class="project-slide active" data-index="0" aria-label="Project 1: DefNet Platform">
+
+                            <div class="project-card project-blue tilt-card">
+
+                                <div class="project-card-top">
+
+                                    <span class="project-card-number">
+                                        01
+                                    </span>
+
+                                    <span class="project-card-category">
+                                        NETWORK SECURITY / FULL-STACK
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-center">
+
+                                    <span class="project-card-title">
+                                        DEFNET
+                                        <br>
+                                        SCANNER
+                                    </span>
+
+                                    <span class="project-card-hint">
+                                        CLICK TO EXPLORE →
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-bottom">
+
+                                    <span>
+                                        REACT 18 · PHP REST API · MYSQL · SCAPY
+                                    </span>
+
+                                    <span class="project-inspect-btn">
+                                        DEEP DIVE 🔍
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+
+
+                        <!-- =================================
+                             PROJECT 02: AI Pose Assistant
+                        ================================== -->
+
+                        <article class="project-slide" data-index="1" aria-label="Project 2: AI Photography Pose Assistant">
+
+                            <div class="project-card project-lavender tilt-card">
+
+                                <div class="project-card-top">
+
+                                    <span class="project-card-number">
+                                        02
+                                    </span>
+
+                                    <span class="project-card-category">
+                                        AI / COMPUTER VISION / WASM
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-center">
+
+                                    <span class="project-card-title">
+                                        AI POSE
+                                        <br>
+                                        ASSISTANT
+                                    </span>
+
+                                    <span class="project-card-hint">
+                                        CLICK TO EXPLORE →
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-bottom">
+
+                                    <span>
+                                        MEDIAPIPE · WEBGPU · WASM · VITEST
+                                    </span>
+
+                                    <span class="project-inspect-btn">
+                                        DEEP DIVE 🔍
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+
+
+                        <!-- =================================
+                             PROJECT 03: Bookmark Web App
+                        ================================== -->
+
+                        <article class="project-slide" data-index="2" aria-label="Project 3: Bookmark Web App">
+
+                            <div class="project-card project-emerald tilt-card">
+
+                                <div class="project-card-top">
+
+                                    <span class="project-card-number">
+                                        03
+                                    </span>
+
+                                    <span class="project-card-category">
+                                        FRONTEND / REACT.JS / WEB APP
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-center">
+
+                                    <span class="project-card-title">
+                                        BOOKMARK
+                                        <br>
+                                        APP
+                                    </span>
+
+                                    <span class="project-card-hint">
+                                        CLICK TO EXPLORE →
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-bottom">
+
+                                    <span>
+                                        REACT.JS · MODULAR UI · LOCAL STORAGE
+                                    </span>
+
+                                    <span class="project-inspect-btn">
+                                        DEEP DIVE 🔍
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+
+
+                        <!-- =================================
+                             PROJECT 04: Mythic Gesture Engine
+                        ================================== -->
+
+                        <article class="project-slide" data-index="3" aria-label="Project 4: Mythic Gesture Engine">
+
+                            <div class="project-card project-amber tilt-card">
+
+                                <div class="project-card-top">
+
+                                    <span class="project-card-number">
+                                        04
+                                    </span>
+
+                                    <span class="project-card-category">
+                                        AI / COMPUTER VISION / GPU VFX
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-center">
+
+                                    <span class="project-card-title">
+                                        MYTHIC
+                                        <br>
+                                        ENGINE
+                                    </span>
+
+                                    <span class="project-card-hint">
+                                        CLICK TO EXPLORE →
+                                    </span>
+
+                                </div>
+
+
+                                <div class="project-card-bottom">
+
+                                    <span>
+                                        PYTHON · MODERNGL · MEDIAPIPE · DSP AUDIO
+                                    </span>
+
+                                    <span class="project-inspect-btn">
+                                        DEEP DIVE 🔍
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     PROJECT INFORMATION
+                ================================== -->
+
+                <div class="project-details">
+
+                    <div class="project-meta">
+
+                        <span class="project-counter-text" id="projectCounter">
+                            01 / 04
+                        </span>
+
+                        <span class="project-instruction">
+                            KEY HIGHLIGHTS:
+                        </span>
+
+                        <div class="project-highlights-box" id="projectHighlightsBox">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+
+                    </div>
+
+
+                    <div class="project-text">
+
+                        <h3 id="projectTitle">
+                            DefNet Network Scanner & Asset Management Platform
+                        </h3>
+
+                        <p id="projectDescription">
+                            Architected an asset tracking system that integrated a localized Python network script to act as a full-stack facility platform. Built a responsive frontend using React 18 and Chart.js to map live hardware inventory statistics across distinct rooms, and engineered a backend PHP REST API with MySQL implementing Role-Based Access Control (RBAC) and server activity logs.
+                        </p>
+
+                        <div class="project-tags-list" id="projectTagsList">
+                            <span class="project-tech">REACT 18</span>
+                            <span class="project-tech">PHP REST API</span>
+                            <span class="project-tech">MYSQL 8.0</span>
+                            <span class="project-tech">PYTHON (SCAPY)</span>
+                            <span class="project-tech">CHART.JS</span>
+                            <span class="project-tech">RBAC</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="project-actions-col">
+                        <button class="project-inspect-trigger-btn" id="projectInspectTriggerBtn" type="button">
+                            <span>Inspect Architecture</span>
+                            <span class="icon">🔬</span>
+                        </button>
+                        <a href="https://github.com/upasana15-k" target="_blank" rel="noopener noreferrer" class="project-link" id="projectLink">
+                            <span>GitHub Source</span>
+                            <span class="link-arrow">↗</span>
+                        </a>
+                        <span class="project-status-tag" id="projectBadge">Verified Technical Project</span>
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     PROJECT NAVIGATION
+                ================================== -->
+
+                <div class="project-navigation">
+
+                    <button class="project-nav-item active" type="button" data-project="0">
+
+                        <span>
+                            01
+                        </span>
+
+                        <strong>
+                            DefNet Network Scanner & Asset Platform
+                        </strong>
+
+                    </button>
+
+
+                    <button class="project-nav-item" type="button" data-project="1">
+
+                        <span>
+                            02
+                        </span>
+
+                        <strong>
+                            AI Photography Pose Assistant
+                        </strong>
+
+                    </button>
+
+
+                    <button class="project-nav-item" type="button" data-project="2">
+
+                        <span>
+                            03
+                        </span>
+
+                        <strong>
+                            Bookmark Web App (React.js)
+                        </strong>
+
+                    </button>
+
+
+                    <button class="project-nav-item" type="button" data-project="3">
+
+                        <span>
+                            04
+                        </span>
+
+                        <strong>
+                            Mythic Gesture Engine (GPU VFX)
+                        </strong>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================
+                     PROGRESS
+                ================================== -->
+
+                <div class="project-progress">
+
+                    <div class="progress-track">
+
+                        <div class="progress-fill" id="progressFill"></div>
+
+                    </div>
+
+                    <span class="progress-total">
+                        04
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             EXPERIENCE & LEADERSHIP
+        ========================== -->
+
+        <section class="experience-section reveal-section" id="experience">
+
+            <div class="section-container">
+
+                <div class="section-heading-split">
+                    <div>
+                        <span class="section-number">
+                            03 / EXPERIENCE & LEADERSHIP
+                        </span>
+
+                        <h2>
+                            Roles, Practice &
+                            <br>
+                            Leadership.
+                        </h2>
+                    </div>
+
+                    <p class="section-subtext">
+                        Practical engineering internships, open-source community contributions, and institutional leadership roles across technical clubs and councils.
+                    </p>
+                </div>
+
+
+                <div class="timeline-container">
+
+                    <!-- Role 1: VFJ -->
+                    <article class="timeline-card timeline-card--has-banner tilt-card">
+                        <div class="timeline-card-banner">
+                            <img src="assets/images/vjf.jpg" alt="Vehicle Factory Jabalpur Defence Facility" class="timeline-banner-img" loading="lazy">
+                            <div class="timeline-banner-overlay">
+                                <span class="timeline-banner-tag">VOCATIONAL TRAINEE · DEFENSE IT SECTOR</span>
+                                <span class="timeline-banner-date">July 2026</span>
+                            </div>
+                        </div>
+                        <div class="timeline-card-inner">
+                            <div class="timeline-card-meta">
+                                <span class="timeline-tag">VOCATIONAL TRAINEE</span>
+                                <span class="timeline-date">July 2026</span>
+                                <span class="role-org-badge">Defense IT Sector</span>
+                            </div>
+                            <div class="timeline-card-body">
+                                <div class="role-org-line">
+                                    <div>
+                                        <h3>Vehicle Factory Jabalpur (VFJ) · IT CELL</h3>
+                                        <span class="role-location">📍 Jabalpur, MP</span>
+                                    </div>
+                                    <span class="role-type-pill">Industrial Training</span>
+                                </div>
+                                <ul class="role-bullets">
+                                    <li>
+                                        <strong>Subnet Infrastructure Analysis:</strong> Analyzed localized subnet infrastructure utilizing a Python-based IP Scanner engine to discover live network hosts.
+                                    </li>
+                                    <li>
+                                        <strong>Enterprise Network Operations:</strong> Gained hands-on experience in enterprise network infrastructure operations and server configuration diagnostics.
+                                    </li>
+                                </ul>
+                                <div class="role-tech-badges">
+                                    <span>Python</span>
+                                    <span>Network Diagnostics</span>
+                                    <span>Subnet Analysis</span>
+                                    <span>Enterprise IT</span>
+                                    <span>Server Audits</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+
+                    <!-- Role 2: JLUG -->
+                    <article class="timeline-card timeline-card--logo tilt-card">
+                        <div class="timeline-card-logo-col">
+                            <div class="timeline-logo-wrap">
+                                <img src="assets/images/jlug_jec_logo.jpg" alt="JLUG Linux User Group Logo" class="timeline-org-logo" loading="lazy">
+                            </div>
+                            <div class="timeline-card-meta">
+                                <span class="timeline-tag">JLUG TECH CORE MEMBER</span>
+                                <span class="timeline-role">Frontend Developer</span>
+                                <span class="timeline-date">2023-2025</span>
+                                <span class="role-org-badge">Linux User Group</span>
+                            </div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="role-org-line">
+                                <div>
+                                    <h3>Jabalpur Linux User Group (JLUG)</h3>
+                                    <span class="role-location">📍 Community Track</span>
+                                </div>
+                                <a href="https://github.com/upasana15-k" target="_blank" rel="noopener noreferrer" class="role-ext-link">Project Link ↗</a>
+                            </div>
+                            <ul class="role-bullets">
+                                <li>
+                                    <strong>Community Web Page:</strong> Designed and implemented a responsive web page for the Jabalpur Linux User Group using React.js to showcase club activities and resources.
+                                </li>
+                                <li>
+                                    <strong>Component Structure:</strong> Developed clean and modular React.js components ensuring cross-device responsiveness and quick load times.
+                                </li>
+                                <li>
+                                    <strong>Collaborative Version Control:</strong> Worked with club contributors using Git and GitHub for branch management and pull request reviews.
+                                </li>
+                            </ul>
+                            <div class="role-tech-badges">
+                                <span>React.js</span>
+                                <span>Responsive Web</span>
+                                <span>UI Components</span>
+                                <span>Git / GitHub</span>
+                                <span>Open Source</span>
+                            </div>
+                        </div>
+                    </article>
+
+
+                    <!-- Role 3: IIC & E-Cell -->
+                    <article class="timeline-card timeline-card--logo tilt-card">
+                        <div class="timeline-card-logo-col">
+                            <div class="timeline-logo-wrap">
+                                <img src="assets/images/iic_log0.jpg" alt="E-Cell and IIC Innovation Council Logo" class="timeline-org-logo" loading="lazy">
+                            </div>
+                            <div class="timeline-card-meta">
+                                <span class="timeline-tag">CORE MANAGEMENT MEMBER</span>
+                                <span class="timeline-date">Leadership Role</span>
+                                <span class="role-org-badge">National Initiatives</span>
+                            </div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="role-org-line">
+                                <div>
+                                    <h3>Institution&#39;s Innovation Council (IIC) &amp; Entrepreneurship Cell (E-Cell)</h3>
+                                    <span class="role-location">📍 JEC Jabalpur</span>
+                                </div>
+                                <span class="role-type-pill">Management Core</span>
+                            </div>
+                            <ul class="role-bullets">
+                                <li>
+                                    <strong>Event Operations:</strong> Managed event tracking, scheduling, and logistics for institutional innovation events and student-led technical summits.
+                                </li>
+                                <li>
+                                    <strong>Cross-Functional Coordination:</strong> Coordinated multi-team student communication tracks and tracked volunteer resource groups across college departments.
+                                </li>
+                            </ul>
+                            <div class="role-tech-badges">
+                                <span>Event Operations</span>
+                                <span>Team Coordination</span>
+                                <span>Team Leadership</span>
+                                <span>Scheduling</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FILTERABLE TECHNICAL SKILLS ARSENAL
+        ========================== -->
+
+        <section class="skills reveal-section" id="skills">
+
+            <div class="section-container">
+
+                <div class="skills-header-row">
+                    <div>
+                        <span class="section-number">
+                            04 / TECHNICAL ARSENAL
+                        </span>
+
+                        <h2>
+                            Languages, frameworks,
+                            <br>
+                            tools & competencies.
+                        </h2>
+                    </div>
+
+                    <!-- Interactive Live Skills Filter & Search -->
+                    <div class="skills-interactive-bar">
+                        <div class="skills-search-wrapper">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="skillsSearchInput" placeholder="Filter skills (e.g. React, Python, OpenCV)..." aria-label="Filter skills">
+                        </div>
+                        <div class="skills-filter-chips" id="skillsFilterChips">
+                            <button class="filter-chip active" type="button" data-filter="all">All (<span class="chip-count">24</span>)</button>
+                            <button class="filter-chip" type="button" data-filter="languages">Languages</button>
+                            <button class="filter-chip" type="button" data-filter="frameworks">Frameworks & Vision</button>
+                            <button class="filter-chip" type="button" data-filter="tools">Tools & Systems</button>
+                            <button class="filter-chip" type="button" data-filter="competencies">Core CS</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="skills-grid-detailed" id="skillsGrid">
+
+                    <!-- Category 1: Languages -->
+                    <div class="skill-category-box tilt-card" data-category="languages">
+                        <div class="category-header">
+                            <span class="cat-num">01</span>
+                            <h3>Programming Languages</h3>
+                        </div>
+                        <div class="skills-tag-cluster">
+                            <span class="skill-tag highlight" data-skill="C">C <span class="skill-level">Fundamentals</span></span>
+                            <span class="skill-tag highlight" data-skill="C++">C++ <span class="skill-level">DSA & OOP</span></span>
+                            <span class="skill-tag highlight" data-skill="Python">Python <span class="skill-level">Vision / Scapy</span></span>
+                            <span class="skill-tag highlight" data-skill="JavaScript">JavaScript (ES6+) <span class="skill-level">Interactive</span></span>
+                            <span class="skill-tag highlight" data-skill="SQL">SQL <span class="skill-level">Relational DB</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Category 2: Frameworks & Libraries -->
+                    <div class="skill-category-box tilt-card" data-category="frameworks">
+                        <div class="category-header">
+                            <span class="cat-num">02</span>
+                            <h3>Frameworks & AI Libraries</h3>
+                        </div>
+                        <div class="skills-tag-cluster">
+                            <span class="skill-tag" data-skill="React 18">React 18</span>
+                            <span class="skill-tag" data-skill="Node.js">Node.js</span>
+                            <span class="skill-tag" data-skill="Express.js">Express.js</span>
+                            <span class="skill-tag" data-skill="OpenCV">OpenCV</span>
+                            <span class="skill-tag" data-skill="MediaPipe">MediaPipe</span>
+                            <span class="skill-tag" data-skill="Bootstrap 5">Bootstrap 5</span>
+                            <span class="skill-tag" data-skill="Chart.js">Chart.js</span>
+                            <span class="skill-tag" data-skill="Scapy">Python (Scapy)</span>
+                        </div>
+                    </div>
+
+                    <!-- Category 3: Tools & UI Design -->
+                    <div class="skill-category-box tilt-card" data-category="tools">
+                        <div class="category-header">
+                            <span class="cat-num">03</span>
+                            <h3>Tools, Systems & UI</h3>
+                        </div>
+                        <div class="skills-tag-cluster">
+                            <span class="skill-tag" data-skill="Git">Git / GitHub</span>
+                            <span class="skill-tag" data-skill="MySQL">MySQL 8.0</span>
+                            <span class="skill-tag" data-skill="MongoDB">MongoDB</span>
+                            <span class="skill-tag" data-skill="Linux">Linux / Unix</span>
+                            <span class="skill-tag" data-skill="Figma">Figma</span>
+                            <span class="skill-tag" data-skill="Apache">XAMPP / Apache</span>
+                            <span class="skill-tag" data-skill="Vite">Vite</span>
+                            <span class="skill-tag" data-skill="Vitest">Vitest</span>
+                        </div>
+                    </div>
+
+                    <!-- Category 4: Core Competencies -->
+                    <div class="skill-category-box tilt-card" data-category="competencies">
+                        <div class="category-header">
+                            <span class="cat-num">04</span>
+                            <h3>Core CS & Competencies</h3>
+                        </div>
+                        <div class="skills-tag-cluster">
+                            <span class="skill-tag" data-skill="REST APIs">REST APIs</span>
+                            <span class="skill-tag" data-skill="RBAC">Role-Based Access Control (RBAC)</span>
+                            <span class="skill-tag" data-skill="UI Layout">UI Layout Design</span>
+                            <span class="skill-tag" data-skill="State Management">State Management</span>
+                            <span class="skill-tag" data-skill="DSA">Data Structures & Algorithms</span>
+                            <span class="skill-tag" data-skill="OOPs">Object-Oriented Programming (OOPs)</span>
+                            <span class="skill-tag" data-skill="DBMS">DBMS & Relational Design</span>
+                            <span class="skill-tag" data-skill="Networks">Computer Networks</span>
+                            <span class="skill-tag" data-skill="OS">Operating Systems</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             EDUCATION
+        ========================== -->
+
+        <section class="education-section reveal-section" id="education">
+
+            <div class="section-container">
+
+                <span class="section-number">
+                    05 / EDUCATION
+                </span>
+
+                <h2>
+                    Academic Foundation.
+                </h2>
+
+                <div class="education-card tilt-card">
+
+                    <div class="edu-campus-banner">
+                        <img src="assets/images/campus.jpg" alt="Jabalpur Engineering College Campus" class="edu-campus-img" loading="lazy">
+                        <div class="edu-campus-overlay">
+                            <span class="edu-campus-label">Jabalpur Engineering College · Est. 1947</span>
+                        </div>
+                    </div>
+
+                    <div class="education-header">
+                        <div>
+                            <span class="edu-badge">UNDERGRADUATE DEGREE</span>
+                            <h3>Jabalpur Engineering College (JEC)</h3>
+                            <p class="edu-degree">Bachelor of Technology in Computer Science and Engineering</p>
+                        </div>
+                        <div class="edu-timeline">
+                            <span class="edu-location">📍 Jabalpur, MP, India</span>
+                            <span class="edu-years">2023 – 2027</span>
+                        </div>
+                    </div>
+
+                    <div class="edu-body">
+                        <h4>Core Computer Science Fundamentals:</h4>
+                        <div class="fundamentals-grid">
+                            <div class="fund-item">
+                                <span class="fund-icon">🧠</span>
+                                <strong>Data Structures & Algorithms</strong>
+                                <p>Algorithmic optimization, complexity analysis & problem-solving.</p>
+                            </div>
+                            <div class="fund-item">
+                                <span class="fund-icon">📦</span>
+                                <strong>Object-Oriented Programming (OOPs)</strong>
+                                <p>Abstraction, inheritance, encapsulation & polymorphic software design.</p>
+                            </div>
+                            <div class="fund-item">
+                                <span class="fund-icon">🗄️</span>
+                                <strong>Database Management Systems (DBMS)</strong>
+                                <p>Relational SQL design, normalization, ACID properties & indexing.</p>
+                            </div>
+                            <div class="fund-item">
+                                <span class="fund-icon">⚙️</span>
+                                <strong>Operating Systems</strong>
+                                <p>Process scheduling, memory virtualization, concurrency & multi-threading.</p>
+                            </div>
+                            <div class="fund-item">
+                                <span class="fund-icon">🌐</span>
+                                <strong>Computer Networks</strong>
+                                <p>TCP/IP stack, routing protocols, subnetting & packet level analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CERTIFICATIONS & CREDENTIALS
+        ========================== -->
+
+        <section class="certificates-section reveal-section" id="certificates">
+
+            <div class="section-container">
+
+                <div class="section-heading-split">
+                    <div>
+                        <span class="section-number">
+                            06 / CERTIFICATION & CREDENTIAL
+                        </span>
+
+                        <h2>
+                            Verified Professional
+                            <br>
+                            Certification.
+                        </h2>
+                    </div>
+
+                    <p class="section-subtext">
+                        Industry-verified job simulation credential issued by <strong>Tata</strong> in collaboration with <strong>Forage</strong>, demonstrating applied AI and data analytics competencies.
+                    </p>
+                </div>
+
+
+                <div class="cert-single-container">
+
+                    <!-- Tata | Forage Featured Certificate Card -->
+                    <article class="cert-featured-card tilt-card">
+                        
+                        <div class="cert-preview-wrapper" id="certPreviewClick" title="Click to view full certificate">
+                            <img src="assets/images/tata_forage_certificate.png" alt="Tata Forage GenAI Powered Data Analytics Certificate of Completion - Upasana Kudape" class="cert-preview-img" loading="lazy">
+                            <div class="cert-preview-overlay">
+                                <span class="cert-zoom-btn">Inspect Certificate 🔍</span>
+                            </div>
+                        </div>
+
+                        <div class="cert-featured-content">
+                            <div>
+                                <div class="cert-issuer-row">
+                                    <div class="cert-partner-badges">
+                                        <span class="tata-badge">TATA</span>
+                                        <span class="forage-badge">Forage Certified</span>
+                                    </div>
+                                    <span class="cert-date">Issued: June 30th, 2026</span>
+                                </div>
+
+                                <h3 class="cert-featured-title">
+                                    GenAI Powered Data Analytics Job Simulation
+                                </h3>
+
+                                <p class="cert-featured-sub">
+                                    Certificate of Completion · Issued to <strong>Upasana Kudape</strong>
+                                </p>
+
+                                <div class="cert-tasks-title">Completed Practical Tasks & AI Competencies:</div>
+
+                                <ul class="cert-tasks-list">
+                                    <li>Exploratory data analysis and risk profiling</li>
+                                    <li>Predicting delinquency with AI models</li>
+                                    <li>Business report and data storytelling for collections strategy</li>
+                                    <li>Implementing an AI-driven collections strategy</li>
+                                </ul>
+
+                                <div class="cert-verification-box">
+                                    <span><strong>Enrolment Verification Code:</strong> tf4Hf3scPF95sNkCf</span>
+                                    <span><strong>User Verification Code:</strong> 6a4282f5a18d20d0140298c4</span>
+                                    <span><strong>Signatory:</strong> Tom Brunskill (Co-Founder, Forage)</span>
+                                </div>
+                            </div>
+
+                            <div class="cert-actions-row">
+                                <button class="btn-cert-primary" id="certInspectBtn" type="button" data-magnetic>
+                                    <span>Inspect Certificate</span>
+                                    <span>🔍</span>
+                                </button>
+                                <a href="assets/Tata_Forage_GenAI_Certificate.pdf" target="_blank" download="Upasana_Kudape_Tata_Forage_Certificate.pdf" class="btn-cert-secondary" data-magnetic>
+                                    <span>Download Official PDF</span>
+                                    <span>📄</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CURRENT FOCUS / LEARNING
+        ========================== -->
+
+        <section class="learning reveal-section" id="learning">
+
+            <div class="section-container">
+
+                <span class="section-number">
+                    07 / CONTINUOUS GROWTH
+                </span>
+
+                <h2>
+                    Currently exploring &
+                    <br>
+                    mastering.
+                </h2>
+
+
+                <div class="learning-content">
+
+                    <div class="learning-item">
+
+                        <span class="learning-num">01</span>
+
+                        <h3>
+                            C++ & Advanced DSA
+                        </h3>
+
+                        <p>
+                            Strengthening algorithmic rigor, competitive programming patterns, and deep memory/runtime efficiency.
+                        </p>
+
+                    </div>
+
+
+                    <div class="learning-item">
+
+                        <span class="learning-num">02</span>
+
+                        <h3>
+                            Edge AI & WebGPU Shaders
+                        </h3>
+
+                        <p>
+                            Running high-performance neural networks and computer vision models directly in the browser with WebAssembly & WebGPU shaders.
+                        </p>
+
+                    </div>
+
+                    <div class="learning-item">
+
+                        <span class="learning-num">03</span>
+
+                        <h3>
+                            Scalable REST APIs & Systems
+                        </h3>
+
+                        <p>
+                            Designing resilient backend microservices with rigorous Role-Based Access Control (RBAC) and clean database schemas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONTACT SECTION
+        ========================== -->
+
+        <section class="contact reveal-section" id="contact">
+
+            <div class="section-container contact-inner">
+
+                <span class="section-number">
+                    08 / SAY HELLO
+                </span>
+
+                <h2>
+                    Let's connect &
+                    <br>
+                    collaborate.
+                </h2>
+
+                <p class="contact-desc">
+                    Interested in discussing software internships, edge computer vision projects, full-stack tools, or network security? Reach out directly.
+                </p>
+
+                <div class="contact-card-box tilt-card">
+                    <div class="contact-email-row">
+                        <span class="email-label">PRIMARY EMAIL:</span>
+                        <a href="mailto:0201cs231108@gmail.com" class="email-address">0201cs231108@gmail.com</a>
+                        <button class="btn-copy-email" id="copyEmailBtn" type="button" aria-label="Copy email to clipboard" data-magnetic>
+                            <span id="copyEmailText">Copy Email 📋</span>
+                        </button>
+                    </div>
+
+                    <div class="contact-actions-row">
+                        <a href="mailto:0201cs231108@gmail.com" class="contact-primary-btn" data-magnetic>
+                            Send Direct Email →
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-sub-btn" data-magnetic>
+                            LinkedIn Profile ↗
+                        </a>
+                        <a href="https://github.com/upasana15-k" target="_blank" rel="noopener noreferrer" class="contact-sub-btn" data-magnetic>
+                            GitHub Profile ↗
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         INTERACTIVE PROJECT DEEP DIVE MODAL
+    ========================== -->
+
+    <div class="project-modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="project-modal-backdrop" id="modalBackdrop"></div>
+        <div class="project-modal-container">
+            <div class="project-modal-header">
+                <div>
+                    <span class="modal-category" id="modalCategory">NETWORK SECURITY</span>
+                    <h2 class="modal-title" id="modalTitle">Project Title</h2>
+                </div>
+                <button class="modal-close-btn" id="modalCloseBtn" type="button" aria-label="Close modal">&times;</button>
+            </div>
+            
+            <div class="project-modal-body">
+                <div class="modal-section">
+                    <h3>Architecture & Engineering Pipeline</h3>
+                    <div class="modal-diagram-container" id="modalDiagramContainer">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Technical Highlights</h3>
+                    <ul class="modal-bullets-list" id="modalBulletsList">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Algorithm & Stack Matrix</h3>
+                    <div class="modal-tech-cloud" id="modalTechCloud">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-modal-footer">
+                <a href="https://github.com/upasana15-k" target="_blank" rel="noopener noreferrer" class="modal-action-btn" id="modalRepoBtn">
+                    View GitHub Repository ↗
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =========================
+         CERTIFICATE INSPECTION MODAL
+    ========================== -->
+
+    <div class="cert-modal" id="certModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
+        <div class="cert-modal-backdrop" id="certModalBackdrop"></div>
+        <div class="cert-modal-container">
+            <div class="cert-modal-header">
+                <div>
+                    <span class="cert-badge-ribbon">Tata · Forage Certified</span>
+                    <h2 class="cert-modal-title" id="certModalTitle">GenAI Powered Data Analytics Job Simulation</h2>
+                </div>
+                <button class="cert-modal-close-btn" id="certModalCloseBtn" type="button" aria-label="Close certificate modal">&times;</button>
+            </div>
+
+            <div class="cert-modal-body">
+                <div class="cert-modal-img-wrapper">
+                    <img src="assets/images/tata_forage_certificate.png" alt="Tata Forage Certificate of Completion - Upasana Kudape" loading="lazy">
+                </div>
+
+                <div class="cert-meta-grid">
+                    <div class="cert-meta-item">
+                        <strong>Issued By:</strong>
+                        <span>Tata in partnership with Forage</span>
+                    </div>
+                    <div class="cert-meta-item">
+                        <strong>Issued To:</strong>
+                        <span>Upasana Kudape</span>
+                    </div>
+                    <div class="cert-meta-item">
+                        <strong>Completion Date:</strong>
+                        <span>June 30th, 2026</span>
+                    </div>
+                    <div class="cert-meta-item">
+                        <strong>Signatory:</strong>
+                        <span>Tom Brunskill (Co-Founder, Forage)</span>
+                    </div>
+                    <div class="cert-meta-item">
+                        <strong>Enrolment Verification Code:</strong>
+                        <span>tf4Hf3scPF95sNkCf</span>
+                    </div>
+                    <div class="cert-meta-item">
+                        <strong>User Verification Code:</strong>
+                        <span>6a4282f5a18d20d0140298c4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-modal-footer">
+                <span class="cert-id-tag">Digitally Verified & Authenticated by Forage</span>
+                <a href="assets/Tata_Forage_GenAI_Certificate.pdf" target="_blank" download="Upasana_Kudape_Tata_Forage_Certificate.pdf" class="btn-cert-primary" id="certModalVerifyBtn">
+                    <span>Download Official PDF</span>
+                    <span>📄</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =========================
+         COMMAND PALETTE (CTRL+K / ⌘K)
+    ========================== -->
+
+    <div class="cmd-palette" id="cmdPalette" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Command Palette">
+        <div class="cmd-backdrop" id="cmdBackdrop"></div>
+        <div class="cmd-box">
+            <div class="cmd-input-row">
+                <span class="cmd-search-icon">🔍</span>
+                <input type="text" class="cmd-input" id="cmdInput" placeholder="Type a command or jump to section..." autocomplete="off">
+                <kbd class="cmd-esc-badge">ESC</kbd>
+            </div>
+            <div class="cmd-results" id="cmdResults">
+                <!-- Populated via JS -->
+            </div>
+            <div class="cmd-footer">
+                <span>Use <kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
+                <span><kbd>ENTER</kbd> to select</span>
+                <span><kbd>ESC</kbd> to dismiss</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toastNotification" role="alert" aria-live="polite">
+        Email copied to clipboard!
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-brand">
+            <a href="#home" class="logo">
+                upasana<span class="logo-dot">.</span>
+            </a>
+            <span class="footer-tagline">B.Tech CSE · Jabalpur Engineering College (2023–2027)</span>
+        </div>
+
+        <div class="social-links">
+
+            <a href="https://github.com/upasana15-k" target="_blank" rel="noopener noreferrer" data-magnetic>
+                GitHub
+            </a>
+
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" data-magnetic>
+                LinkedIn
+            </a>
+
+            <a href="mailto:0201cs231108@gmail.com" data-magnetic>
+                Email
+            </a>
+
+            <a href="#home" class="back-to-top" aria-label="Scroll back to top" data-magnetic>
+                ↑ Top
+            </a>
+
+        </div>
+
+        <span class="footer-copy">
+            © 2026 Upasana Kudape. Designed & Engineered with modern Web Standards.
+        </span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
