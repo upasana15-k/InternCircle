@@ -25,3 +25,12 @@ Thumbs.db
 *.zip
 *.tar.gz
 *.rar
+
+# Other independent projects in workspace
+E-commerce/
+MGE/
+ai-photographer/
+flair-fashion-sparkle/
+mythic-gesture-engine-milestone1/
+syncpulse/
+package-lock.json
