@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow 🌸 Cozy Planner & To-Do List</title>
+  <meta name="description" content="A warm, cute Pinterest-aesthetic task manager built with Vanilla JavaScript, HTML5, CSS3 and LocalStorage persistence. Project 2 for InternCircle Virtual Internship." />
+  <meta name="author" content="Upasana Kudape" />
+
+  <!-- Google Fonts: Quicksand (Pinterest aesthetic), Fredoka, Caveat (Cute handwritten note font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Favicon (Cute Peach Blossom & Heart SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%23ffb5a7'/><path d='M50 68 C28 54 22 38 34 26 C42 18 50 26 50 28 C50 26 58 18 66 26 C78 38 72 54 50 68 Z' fill='%23e07a5f'/></svg>" type="image/svg+xml" />
+</head>
+<body>
+  <!-- Cute Warm Background Pastel Blobs -->
+  <div class="blob-pastel blob-1" aria-hidden="true"></div>
+  <div class="blob-pastel blob-2" aria-hidden="true"></div>
+  <div class="blob-pastel blob-3" aria-hidden="true"></div>
+  <div class="bg-paper-grain" aria-hidden="true"></div>
+
+  <!-- Confetti Canvas for Celebrations -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <div class="app-container">
+    <!-- ================= NAVBAR / HEADER ================= -->
+    <header class="app-header" role="banner">
+      <div class="header-brand">
+        <div class="brand-logo" aria-hidden="true">
+          <!-- Cute cup of warm coffee/matcha with heart steam -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <path d="M6 1v3M10 1v3M14 1v3"></path>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <div class="brand-title-wrap">
+            <h1 class="brand-title">TaskFlow <span class="badge-cute">girly diary planner 🎀</span></h1>
+            <span class="internship-tag">✨ InternCircle · Project 2</span>
+          </div>
+          <p class="brand-subtitle" id="current-date-time">Loading cute date...</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Sound Toggle -->
+        <button id="sound-toggle-btn" class="icon-btn cute-btn" title="Toggle Cute Sounds (S)" aria-label="Toggle Sound Effects">
+          <svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Keyboard Shortcuts Helper -->
+        <button id="shortcuts-modal-btn" class="icon-btn cute-btn" title="Keyboard Shortcuts (?)" aria-label="View Keyboard Shortcuts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="3" ry="3"></rect>
+            <path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M8 12h.001M12 12h.001M16 12h.001M7 16h10"></path>
+          </svg>
+        </button>
+
+        <!-- Cute Girly Theme Selector / Cycle -->
+        <button id="theme-toggle-btn" class="icon-btn theme-toggle cute-btn" title="Cycle Themes: 🍓 Strawberry Milk / 🥐 Buttercream / 💜 Lavender / ☕ Mocha (T)" aria-label="Cycle Cute Themes">
+          <span id="theme-emoji-icon" class="theme-emoji-indicator">🍓</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ================= DASHBOARD SUMMARY & STATS ================= -->
+    <section class="dashboard-hero" aria-label="Overview & Productivity Stats">
+      <!-- Welcome Card styled like a cute Pinterest memo card with washi tape -->
+      <div class="welcome-box">
+        <div class="washi-tape washi-tape-left" aria-hidden="true"></div>
+        <div class="washi-tape washi-tape-right" aria-hidden="true"></div>
+        <div class="cute-sticker-top" aria-hidden="true">🧸</div>
+
+        <span class="greeting-pill" id="greeting-badge">🌸 cozy focus mode</span>
+        <h2 class="welcome-title" id="greeting-title">one step at a time, you got this!</h2>
+        <p class="welcome-desc" id="motivational-quote">"make today wonderfully peaceful & productive ☕"</p>
+        <span class="handwritten-note" aria-hidden="true">~ cute little victories every day ~</span>
+      </div>
+
+      <div class="stats-panel">
+        <div class="progress-ring-card">
+          <div class="ring-container">
+            <svg class="progress-ring" width="94" height="94">
+              <circle class="ring-bg" stroke="currentColor" stroke-width="8" fill="transparent" r="38" cx="47" cy="47" />
+              <circle id="progress-circle-bar" class="ring-indicator" stroke="currentColor" stroke-width="8" stroke-dasharray="238.76" stroke-dashoffset="238.76" stroke-linecap="round" fill="transparent" r="38" cx="47" cy="47" />
+            </svg>
+            <div class="ring-center">
+              <span id="progress-percentage" class="ring-percentage">0%</span>
+            </div>
+          </div>
+          <div class="ring-meta">
+            <span class="ring-label">bloom meter 🌷</span>
+            <span id="progress-status-text" class="ring-subtext">0 of 0 tasks done</span>
+          </div>
+        </div>
+
+        <div class="stat-cards-grid">
+          <div class="stat-card" data-filter="all">
+            <div class="stat-icon-pill">📋</div>
+            <span class="stat-num" id="stat-total">0</span>
+            <span class="stat-title">all tasks</span>
+          </div>
+          <div class="stat-card stat-pending" data-filter="active">
+            <div class="stat-icon-pill">⏳</div>
+            <span class="stat-num" id="stat-pending">0</span>
+            <span class="stat-title">in progress</span>
+          </div>
+          <div class="stat-card stat-completed" data-filter="completed">
+            <div class="stat-icon-pill">💖</div>
+            <span class="stat-num" id="stat-completed">0</span>
+            <span class="stat-title">completed</span>
+          </div>
+          <div class="stat-card stat-overdue">
+            <div class="stat-icon-pill">⏰</div>
+            <span class="stat-num" id="stat-overdue">0</span>
+            <span class="stat-title">overdue</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TASK CREATION FORM ================= -->
+    <section class="task-input-section" aria-label="Add New Task">
+      <form id="new-task-form" class="task-form-card" autocomplete="off">
+        <div class="form-main-row">
+          <div class="input-glow-wrapper">
+            <span class="input-cute-icon" aria-hidden="true">✏️</span>
+            <input
+              type="text"
+              id="task-title-input"
+              class="primary-task-input"
+              placeholder="write down your goal or cute to-do... 🌸 (press Enter)"
+              maxlength="150"
+              aria-label="New task title"
+            />
+            <span class="shortcut-tag" title="Press N to focus">key: N</span>
+          </div>
+          <button type="submit" id="add-task-btn" class="btn btn-primary add-btn">
+            <span>Add Task</span>
+            <span class="btn-emoji">✨</span>
+          </button>
+        </div>
+
+        <!-- Task Metadata Options Row -->
+        <div class="form-options-row">
+          <!-- Priority Selector -->
+          <div class="option-pill-group">
+            <label for="task-priority-select" class="option-label">Priority:</label>
+            <select id="task-priority-select" class="custom-select priority-select">
+              <option value="medium" selected>🍯 Warm Honey (Medium)</option>
+              <option value="high">🍑 Peach (High)</option>
+              <option value="urgent">🍓 Berry Urgent</option>
+              <option value="low">🍵 Matcha (Low)</option>
+            </select>
+          </div>
+
+          <!-- Category Selector -->
+          <div class="option-pill-group">
+            <label for="task-category-select" class="option-label">Category:</label>
+            <select id="task-category-select" class="custom-select category-select">
+              <option value="work" selected>💼 Work & Career</option>
+              <option value="study">📚 Study & Code</option>
+              <option value="personal">🧸 Self Care & Personal</option>
+              <option value="health">🍵 Health & Matcha</option>
+              <option value="finance">🥐 Daily Budget</option>
+              <option value="other">📌 Little Notes</option>
+            </select>
+          </div>
+
+          <!-- Due Date Picker -->
+          <div class="option-pill-group">
+            <label for="task-due-date-input" class="option-label">Due Date:</label>
+            <input type="date" id="task-due-date-input" class="custom-date-input" />
+          </div>
+
+          <!-- Quick presets -->
+          <div class="quick-date-chips">
+            <button type="button" class="chip-btn" data-date="today">today 🌸</button>
+            <button type="button" class="chip-btn" data-date="tomorrow">tomorrow 🥐</button>
+            <button type="button" class="chip-btn" data-date="weekend">weekend ☕</button>
+          </div>
+        </div>
+
+        <!-- Diary Note & Photo Drawer Toggle -->
+        <div class="diary-toggle-bar">
+          <button type="button" id="toggle-diary-drawer-btn" class="diary-drawer-toggle-btn" aria-expanded="false">
+            <span class="diary-toggle-icon">📸</span>
+            <span class="diary-toggle-text">Add Diary Photo & Reflections (optional)</span>
+            <span class="diary-toggle-arrow">▾</span>
+          </button>
+        </div>
+
+        <!-- Collapsible Diary Drawer -->
+        <div id="new-task-diary-drawer" class="diary-drawer" style="display: none;">
+          <!-- Diary Note Textarea -->
+          <div class="diary-drawer-field">
+            <label for="task-note-input" class="diary-drawer-label">
+              <span>📖</span> Today's Diary Entry / Cozy Note:
+            </label>
+            <textarea
+              id="task-note-input"
+              class="diary-drawer-textarea"
+              rows="2"
+              placeholder="Jot down cozy reflections, journaling thoughts, or notes for this goal... 🌸"
+            ></textarea>
+          </div>
+
+          <!-- Photo Picker & Aesthetic Presets -->
+          <div class="diary-drawer-field">
+            <label class="diary-drawer-label">
+              <span>📷</span> Attach Polaroid Picture Memory:
+            </label>
+            <div class="photo-picker-actions">
+              <label for="task-photo-upload" class="photo-upload-label-btn">
+                <span>📁 Upload Image</span>
+              </label>
+              <input type="file" id="task-photo-upload" accept="image/*" style="display: none;" />
+
+              <span class="photo-presets-hint">or cute presets:</span>
+              <div class="preset-photo-buttons">
+                <button type="button" class="preset-btn" data-src="assets/strawberry_latte.jpg">🍓 Latte</button>
+                <button type="button" class="preset-btn" data-src="assets/diary_desk.jpg">📚 Desk</button>
+                <button type="button" class="preset-btn" data-src="assets/strawberry_cake.jpg">🍰 Cake</button>
+              </div>
+            </div>
+
+            <!-- Polaroid Preview Box -->
+            <div id="new-photo-preview-wrap" class="new-photo-preview-box" style="display: none;">
+              <div class="polaroid-preview-card">
+                <div class="polaroid-washi-tape" aria-hidden="true"></div>
+                <img id="new-photo-preview-img" src="" alt="Diary memory photo" class="polaroid-preview-thumbnail" />
+                <span class="polaroid-preview-caption" id="new-photo-preview-caption">today's memory ✨</span>
+              </div>
+              <button type="button" id="remove-new-photo-btn" class="remove-photo-text-btn">&times; Remove Photo</button>
+            </div>
+            <input type="hidden" id="task-photo-data" />
+          </div>
+
+          <!-- Mood & Sticker Row -->
+          <div class="diary-drawer-meta-grid">
+            <div class="diary-meta-unit">
+              <label for="task-mood-select" class="option-label">Today's Mood:</label>
+              <select id="task-mood-select" class="custom-select diary-mood-select">
+                <option value="🌸 Happy" selected>🌸 Happy</option>
+                <option value="🎀 Aesthetic">🎀 Aesthetic</option>
+                <option value="✨ Inspired">✨ Inspired</option>
+                <option value="🍓 Sweet">🍓 Sweet</option>
+                <option value="🧸 Cozy">🧸 Cozy</option>
+                <option value="🍵 Calm">🍵 Calm</option>
+              </select>
+            </div>
+
+            <div class="diary-meta-unit">
+              <label for="task-sticker-select" class="option-label">Cute Sticker:</label>
+              <select id="task-sticker-select" class="custom-select diary-sticker-select">
+                <option value="🎀" selected>🎀 Ribbon Bow</option>
+                <option value="💖">💖 Sparkling Heart</option>
+                <option value="🍓">🍓 Sweet Strawberry</option>
+                <option value="🧸">🧸 Cozy Teddy</option>
+                <option value="🍰">🍰 Bakery Cake</option>
+                <option value="🌷">🌷 Spring Tulip</option>
+                <option value="✨">✨ Fairy Magic</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Diary Drawer Submit Action Button -->
+          <div class="diary-drawer-actions">
+            <button type="submit" id="diary-drawer-submit-btn" class="btn btn-primary diary-submit-btn">
+              <span>💖 Save Diary Entry & Add Goal</span>
+            </button>
+            <span class="diary-submit-hint">Saves with your photo memory, cozy reflections, and mood sticker! ✨</span>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- ================= TOOLBAR: SEARCH, FILTERS, VIEW MODES & BATCH ACTIONS ================= -->
+    <section class="toolbar-section" aria-label="Filter and Search Tasks">
+      <div class="search-and-status-row">
+        <!-- Live Search Bar -->
+        <div class="search-box-wrapper">
+          <span class="search-cute-icon" aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="search little tasks & diary notes... (press /)"
+            aria-label="Search tasks"
+          />
+          <button id="clear-search-btn" class="clear-search-btn" title="Clear Search" style="display:none;" aria-label="Clear Search">&times;</button>
+        </div>
+
+        <!-- Status Filter Tabs -->
+        <div class="status-tabs" role="tablist" aria-label="Status Filters">
+          <button class="status-tab active" data-status="all" role="tab" aria-selected="true">
+            All ✨ <span class="tab-count" id="count-all">0</span>
+          </button>
+          <button class="status-tab" data-status="active" role="tab" aria-selected="false">
+            To Do ⏳ <span class="tab-count" id="count-active">0</span>
+          </button>
+          <button class="status-tab" data-status="completed" role="tab" aria-selected="false">
+            Done 💖 <span class="tab-count" id="count-completed">0</span>
+          </button>
+        </div>
+
+        <!-- View Mode Switcher (List View vs Diary & Polaroid Scrapbook) -->
+        <div class="view-mode-tabs" role="group" aria-label="Display View Mode">
+          <button type="button" id="view-mode-list" class="view-mode-btn active" title="Switch to Compact List View">
+            <span>📋 List</span>
+          </button>
+          <button type="button" id="view-mode-diary" class="view-mode-btn" title="Switch to Cute Diary & Polaroid Scrapbook View">
+            <span>📖 Diary 📸</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Secondary Controls: Categories, Sorting & Batch Actions -->
+      <div class="secondary-controls-row">
+        <!-- Category Filter Pills -->
+        <div class="category-filter-chips" id="category-filter-container">
+          <button class="cat-chip active" data-category="all">🌸 All Tags</button>
+          <button class="cat-chip" data-category="photos">📸 With Photos</button>
+          <button class="cat-chip" data-category="work">💼 Work</button>
+          <button class="cat-chip" data-category="study">📚 Study</button>
+          <button class="cat-chip" data-category="personal">🧸 Self Care</button>
+          <button class="cat-chip" data-category="health">🍵 Health</button>
+          <button class="cat-chip" data-category="finance">🥐 Budget</button>
+          <button class="cat-chip" data-category="other">📌 Notes</button>
+        </div>
+
+        <div class="controls-right-cluster">
+          <!-- Sort Selector -->
+          <div class="sort-selector-wrapper">
+            <span class="sort-cute-icon" aria-hidden="true">🏷️</span>
+            <select id="sort-select" class="sort-select" aria-label="Sort tasks">
+              <option value="date-newest">Sort: Newest First</option>
+              <option value="date-oldest">Sort: Oldest First</option>
+              <option value="due-date">Sort: Due Date (Earliest)</option>
+              <option value="priority">Sort: Priority (High to Low)</option>
+              <option value="alpha">Sort: Alphabetical (A-Z)</option>
+            </select>
+          </div>
+
+          <!-- Actions Dropdown / Menu -->
+          <div class="action-dropdown-container">
+            <button id="batch-menu-btn" class="btn btn-secondary icon-btn-text" aria-haspopup="true" aria-expanded="false">
+              <span>More Options ☕</span>
+            </button>
+
+            <div id="batch-menu-dropdown" class="dropdown-menu" role="menu">
+              <button class="dropdown-item" id="btn-mark-all-done" role="menuitem">
+                <span>💖</span> Mark All as Completed
+              </button>
+              <button class="dropdown-item" id="btn-clear-completed" role="menuitem">
+                <span>🧹</span> Clear Completed
+              </button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" id="btn-export-tasks" role="menuitem">
+                <span>📦</span> Backup to JSON
+              </button>
+              <button class="dropdown-item" id="btn-import-tasks-trigger" role="menuitem">
+                <span>📥</span> Restore from JSON
+              </button>
+              <input type="file" id="import-file-input" accept=".json" style="display: none;" />
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-danger" id="btn-reset-demo" role="menuitem">
+                <span>🔄</span> Reload Cute Sample Tasks
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TASK LIST / DIARY SECTION ================= -->
+    <main class="task-list-section" aria-label="Task List & Diary Scrapbook">
+      <!-- Standard List View & Diary Grid View -->
+      <ul id="task-list" class="task-list view-list" aria-live="polite">
+        <!-- Rendered dynamically by JavaScript -->
+      </ul>
+
+      <!-- Empty State View -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-icon-box">
+          <span class="empty-emoji">🌷</span>
+        </div>
+        <h3 class="empty-title">All tasks completed or none found!</h3>
+        <p class="empty-subtitle">Take a cozy sip of tea or add a new goal above to keep blooming ✨</p>
+        <button id="empty-create-btn" class="btn btn-secondary">
+          <span>Add a Little Goal 🌸</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p class="footer-love">Crafted with 💖 and cozy girly vibes by <strong class="author-name">Upasana Kudape</strong> 🎀</p>
+        <p class="footer-subtext">InternCircle Virtual Internship · Project 2: Interactive To-Do List & Diary Planner with LocalStorage</p>
+        <div class="tech-pills">
+          <span class="tech-tag">🎀 Cute Girly Aesthetics</span>
+          <span class="tech-tag">📸 Photo Diary Journaling</span>
+          <span class="tech-tag">🍵 Vanilla JS (ES6+)</span>
+          <span class="tech-tag">🍓 LocalStorage API</span>
+          <span class="tech-tag">🥐 Web Audio API</span>
+          <span class="tech-tag">🌷 Anti-Overflow Responsive Design</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= EDIT TASK MODAL ================= -->
+  <div id="edit-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="modal-edit-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-edit-title" class="modal-title">Edit Task & Diary Details 🌸</h3>
+        <button id="modal-close-btn" class="modal-close" aria-label="Close dialog">&times;</button>
+      </div>
+      <form id="edit-task-form" class="modal-body">
+        <input type="hidden" id="edit-task-id" />
+
+        <div class="modal-field">
+          <label for="edit-title-input" class="modal-label">Task / Goal Title</label>
+          <input type="text" id="edit-title-input" class="modal-input" required maxlength="150" />
+        </div>
+
+        <div class="modal-grid-2">
+          <div class="modal-field">
+            <label for="edit-priority-select" class="modal-label">Priority</label>
+            <select id="edit-priority-select" class="custom-select">
+              <option value="urgent">🍓 Berry Urgent</option>
+              <option value="high">🍑 Peach High</option>
+              <option value="medium">🍯 Warm Honey</option>
+              <option value="low">🍵 Matcha Low</option>
+            </select>
+          </div>
+
+          <div class="modal-field">
+            <label for="edit-category-select" class="modal-label">Category</label>
+            <select id="edit-category-select" class="custom-select">
+              <option value="work">💼 Work & Career</option>
+              <option value="study">📚 Study & Code</option>
+              <option value="personal">🧸 Self Care</option>
+              <option value="health">🍵 Health & Matcha</option>
+              <option value="finance">🥐 Budget</option>
+              <option value="other">📌 Little Notes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-grid-2">
+          <div class="modal-field">
+            <label for="edit-due-date-input" class="modal-label">Due Date</label>
+            <input type="date" id="edit-due-date-input" class="custom-date-input" />
+          </div>
+
+          <div class="modal-field">
+            <label for="edit-mood-select" class="modal-label">Mood</label>
+            <select id="edit-mood-select" class="custom-select">
+              <option value="🌸 Happy">🌸 Happy</option>
+              <option value="🎀 Aesthetic">🎀 Aesthetic</option>
+              <option value="✨ Inspired">✨ Inspired</option>
+              <option value="🍓 Sweet">🍓 Sweet</option>
+              <option value="🧸 Cozy">🧸 Cozy</option>
+              <option value="🍵 Calm">🍵 Calm</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Edit Diary Note -->
+        <div class="modal-field">
+          <label for="edit-note-input" class="modal-label">📖 Diary Note / Reflection</label>
+          <textarea id="edit-note-input" class="diary-drawer-textarea" rows="2" placeholder="Cozy thoughts or progress reflection..."></textarea>
+        </div>
+
+        <!-- Edit Polaroid Photo -->
+        <div class="modal-field">
+          <label class="modal-label">📸 Photo Memory / Polaroid</label>
+          <div class="photo-picker-actions">
+            <label for="edit-photo-upload" class="photo-upload-label-btn">
+              <span>📁 Upload Image</span>
+            </label>
+            <input type="file" id="edit-photo-upload" accept="image/*" style="display: none;" />
+            
+            <div class="preset-photo-buttons">
+              <button type="button" class="edit-preset-btn" data-src="assets/strawberry_latte.jpg">🍓 Latte</button>
+              <button type="button" class="edit-preset-btn" data-src="assets/diary_desk.jpg">📚 Desk</button>
+              <button type="button" class="edit-preset-btn" data-src="assets/strawberry_cake.jpg">🍰 Cake</button>
+            </div>
+          </div>
+
+          <div id="edit-photo-preview-wrap" class="new-photo-preview-box" style="display: none;">
+            <div class="polaroid-preview-card">
+              <div class="polaroid-washi-tape" aria-hidden="true"></div>
+              <img id="edit-photo-preview-img" src="" alt="Diary memory photo" class="polaroid-preview-thumbnail" />
+            </div>
+            <button type="button" id="remove-edit-photo-btn" class="remove-photo-text-btn">&times; Remove Photo</button>
+          </div>
+          <input type="hidden" id="edit-photo-data" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes ✨</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= PHOTO POLAROID ZOOM LIGHTBOX MODAL ================= -->
+  <div id="photo-zoom-modal" class="modal-backdrop photo-zoom-backdrop" aria-hidden="true" role="dialog" aria-labelledby="zoom-caption">
+    <div class="polaroid-zoom-card">
+      <button id="photo-zoom-close-btn" class="polaroid-zoom-close" aria-label="Close photo view">&times;</button>
+      <div class="polaroid-zoom-tape" aria-hidden="true"></div>
+      <div class="polaroid-zoom-img-wrap">
+        <img id="photo-zoom-img" src="" alt="Full size diary polaroid" class="polaroid-zoom-img" />
+      </div>
+      <div class="polaroid-zoom-meta">
+        <div class="zoom-title-row">
+          <h4 id="zoom-title" class="zoom-title">Goal Title</h4>
+          <span id="zoom-mood-badge" class="zoom-mood-badge">🌸 Happy</span>
+        </div>
+        <p id="zoom-caption" class="zoom-caption">"Diary reflection text..."</p>
+        <span id="zoom-date" class="zoom-date">Date memory</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= KEYBOARD SHORTCUTS MODAL ================= -->
+  <div id="shortcuts-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="modal-shortcuts-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="icon-wrap">⌨️</span>
+          <h3 id="modal-shortcuts-title" class="modal-title">Cute Shortcuts Guide 🌸</h3>
+        </div>
+        <button id="shortcuts-close-btn" class="modal-close" aria-label="Close shortcuts">&times;</button>
+      </div>
+      <div class="modal-body">
+        <table class="shortcuts-table">
+          <tbody>
+            <tr>
+              <td><kbd>N</kbd></td>
+              <td>Focus new task input field</td>
+            </tr>
+            <tr>
+              <td><kbd>Enter</kbd></td>
+              <td>Save / Add new task</td>
+            </tr>
+            <tr>
+              <td><kbd>/</kbd></td>
+              <td>Focus search bar</td>
+            </tr>
+            <tr>
+              <td><kbd>T</kbd></td>
+              <td>Cycle themes (Strawberry Pink, Buttercream, Lavender, Mocha)</td>
+            </tr>
+            <tr>
+              <td><kbd>V</kbd></td>
+              <td>Toggle List View / Diary Polaroid View</td>
+            </tr>
+            <tr>
+              <td><kbd>S</kbd></td>
+              <td>Toggle cute sound effects</td>
+            </tr>
+            <tr>
+              <td><kbd>?</kbd></td>
+              <td>Open this shortcuts guide</td>
+            </tr>
+            <tr>
+              <td><kbd>Esc</kbd></td>
+              <td>Close active modal / cancel action</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="shortcuts-ok-btn" class="btn btn-primary full-width">Got it! 💖</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+  <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- JavaScript Application Entry -->
+  <script src="app.js"></script>
+</body>
+</html>
