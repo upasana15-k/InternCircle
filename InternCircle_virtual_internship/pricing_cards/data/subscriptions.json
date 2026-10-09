@@ -1,0 +1,70 @@
+{
+  "activeUser": {
+    "userId": "usr_cloud_9482",
+    "email": "developer@cloudteam.org",
+    "currentPlanId": "pro",
+    "planName": "Pro Team",
+    "billingCycle": "yearly",
+    "basePriceUSD": 39,
+    "renewalDate": "2027-10-07",
+    "activeContainers": 20,
+    "developerSeats": 10
+  },
+  "orders": [
+    {
+      "invoiceId": "INV-2026-157066",
+      "timestamp": "2026-10-07T14:59:31.332Z",
+      "planId": "pro",
+      "planName": "Pro Team",
+      "billingCycle": "yearly",
+      "paymentMethod": "card",
+      "currency": "USD",
+      "exchangeRate": 1,
+      "grossSubtotalUSD": 948,
+      "discountUSD": 189.60000000000002,
+      "couponApplied": "CLOUD20",
+      "prorationCreditUSD": 7.2,
+      "netSubtotalUSD": 751.1999999999999,
+      "taxAmountUSD": 0,
+      "taxRate": 0,
+      "grandTotalUSD": 751.1999999999999,
+      "grandTotalConverted": 751,
+      "addons": [
+        {
+          "id": "dedicated_ip",
+          "name": "Dedicated Static IPv4",
+          "costUSD": 180
+        },
+        {
+          "id": "edge_cdn",
+          "name": "Global Edge Anycast CDN",
+          "costUSD": 300
+        }
+      ],
+      "status": "ACTIVE_TRIAL",
+      "trialEndsAt": "2026-10-21T14:59:31.332Z"
+    },
+    {
+      "invoiceId": "INV-2026-890493",
+      "timestamp": "2026-10-08T14:30:00.000Z",
+      "planId": "pro",
+      "planName": "Pro Team",
+      "billingCycle": "yearly",
+      "paymentMethod": "card",
+      "currency": "USD",
+      "exchangeRate": 1,
+      "grossSubtotalUSD": 468,
+      "discountUSD": 0,
+      "couponApplied": null,
+      "prorationCreditUSD": 7.2,
+      "netSubtotalUSD": 460.8,
+      "taxAmountUSD": 0,
+      "taxRate": 0,
+      "grandTotalUSD": 460.8,
+      "grandTotalConverted": 461,
+      "addons": [],
+      "status": "ACTIVE_TRIAL",
+      "trialEndsAt": "2026-10-22T14:30:00.000Z"
+    }
+  ]
+}
