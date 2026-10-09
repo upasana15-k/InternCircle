@@ -3,6 +3,22 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/pricing_cards",
+      "destination": "/InternCircle_virtual_internship/pricing_cards/index.html"
+    },
+    {
+      "source": "/pricing_cards/(.*)",
+      "destination": "/InternCircle_virtual_internship/pricing_cards/$1"
+    },
+    {
+      "source": "/to_do_list",
+      "destination": "/InternCircle_virtual_internship/to_do_list/index.html"
+    },
+    {
+      "source": "/to_do_list/(.*)",
+      "destination": "/InternCircle_virtual_internship/to_do_list/$1"
+    },
+    {
       "source": "/",
       "destination": "/InternCircle_virtual_internship/portfolio/index.html"
     },
