@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-weather="clear">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atmosphere Live — Real-Time Weather Dashboard & Dynamic Animations</title>
+  <meta name="description" content="Immersive live weather dashboard powered by Asynchronous Fetch API. Real-time temperature, dynamic animated weather backgrounds (Rain, Snow, Lightning, Sunbeams), interactive 24-hour timeline, and 5-day forecast.">
+  <meta name="keywords" content="Weather Dashboard, Live Weather, Fetch API, Weather Animations, 5-Day Forecast, Open-Meteo, InternCircle">
+  <meta name="author" content="Upasana Kudape">
+
+  <!-- Typography: Outfit, Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Full-Screen Dynamic Weather Animation Canvas Layer -->
+  <canvas id="weatherFxCanvas" class="weather-fx-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient Dynamic Weather Atmosphere Backdrop -->
+  <div class="ambient-backdrop" id="ambientBackdrop" aria-hidden="true">
+    <div class="weather-orb orb-1"></div>
+    <div class="weather-orb orb-2"></div>
+    <div class="weather-orb orb-3"></div>
+    <div class="lightning-flash-overlay" id="lightningFlashOverlay"></div>
+    <div class="sunbeam-rays-overlay" id="sunbeamRaysOverlay"></div>
+  </div>
+
+  <!-- Main App Container -->
+  <div class="app-wrapper">
+
+    <!-- Top Navigation & Controls Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-icon-box" id="brandWeatherIcon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="brand-svg">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title">Atmosphere<span class="brand-accent">Live</span></h1>
+          <span class="brand-badge">Fetch API · 60fps FX</span>
+        </div>
+      </div>
+
+      <!-- Search Bar Form with Autocomplete -->
+      <div class="search-container">
+        <form id="weatherSearchForm" class="search-form" role="search" autocomplete="off">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="citySearchInput" 
+              class="city-search-input" 
+              placeholder="Search any global city (e.g. Tokyo, Mumbai, London, Paris)..."
+              aria-label="Search city or location"
+              aria-autocomplete="list"
+              aria-controls="autocompleteDropdown"
+              required
+            >
+            <button type="button" id="clearSearchBtn" class="clear-search-btn" aria-label="Clear input" style="display: none;">
+              ✕
+            </button>
+            <button type="button" id="geoLocateBtn" class="geo-locate-btn" title="Use My Current GPS Location" aria-label="Use Current Location">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+              </svg>
+              <span class="geo-text">My Location</span>
+            </button>
+          </div>
+          <!-- Live Autocomplete Suggestions Dropdown -->
+          <ul id="autocompleteDropdown" class="autocomplete-list" role="listbox" style="display: none;"></ul>
+        </form>
+      </div>
+
+      <!-- Controls: Unit Toggle & Refresh -->
+      <div class="header-actions">
+        <!-- Temperature Unit Toggle: Celsius vs Fahrenheit -->
+        <div class="unit-toggle-group" role="radiogroup" aria-label="Temperature Unit">
+          <button type="button" class="unit-btn active" id="unitCelsiusBtn" data-unit="c" aria-label="Celsius">°C</button>
+          <button type="button" class="unit-btn" id="unitFahrenheitBtn" data-unit="f" aria-label="Fahrenheit">°F</button>
+        </div>
+
+        <!-- Refresh Button -->
+        <button type="button" id="refreshWeatherBtn" class="icon-action-btn" title="Refresh Live Telemetry" aria-label="Refresh Weather Data">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="refresh-icon">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Interactive Weather FX Mood Simulator Bar -->
+    <section class="scene-presets-bar" aria-label="Live Weather Animation Themes">
+      <div class="scene-bar-inner">
+        <span class="scene-label">
+          <span class="pulse-indicator"></span>
+          Background FX Mood:
+        </span>
+        <div class="scene-chips-scroll" id="sceneChipsScroll">
+          <button type="button" class="scene-btn active" data-scene="clear">☀️ Clear & Sunbeams</button>
+          <button type="button" class="scene-btn" data-scene="rain">🌧️ Rain & Splashes</button>
+          <button type="button" class="scene-btn" data-scene="thunderstorm">⛈️ Lightning Storm</button>
+          <button type="button" class="scene-btn" data-scene="snow">❄️ Drifting Snow</button>
+          <button type="button" class="scene-btn" data-scene="clouds">☁️ Overcast & Fog</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick City Preset Chips -->
+    <section class="quick-cities-bar" aria-label="Quick Select Popular Global Cities">
+      <span class="quick-label">Trending:</span>
+      <div class="quick-chips-scroll" id="quickCitiesChips">
+        <button type="button" class="city-chip active" data-city="New Delhi">🇮🇳 New Delhi</button>
+        <button type="button" class="city-chip" data-city="London">🇬🇧 London</button>
+        <button type="button" class="city-chip" data-city="Tokyo">🇯🇵 Tokyo</button>
+        <button type="button" class="city-chip" data-city="New York">🇺🇸 New York</button>
+        <button type="button" class="city-chip" data-city="Paris">🇫🇷 Paris</button>
+        <button type="button" class="city-chip" data-city="Dubai">🇦🇪 Dubai</button>
+        <button type="button" class="city-chip" data-city="Sydney">🇦🇺 Sydney</button>
+        <button type="button" class="city-chip" data-city="Singapore">🇸🇬 Singapore</button>
+      </div>
+    </section>
+
+    <!-- Recent Searches & Favorites Bar -->
+    <div class="recent-searches-bar" id="recentSearchesBar" style="display: none;">
+      <span class="recent-label">★ Saved Favorites:</span>
+      <div class="recent-chips" id="recentChipsContainer"></div>
+      <button type="button" class="btn-clear-recent" id="clearRecentBtn" title="Clear saved history">Clear</button>
+    </div>
+
+    <!-- Error & Validation Banner (Hidden by default) -->
+    <div class="error-banner" id="errorBanner" role="alert" style="display: none;">
+      <div class="error-icon-box">⚠️</div>
+      <div class="error-content">
+        <h4 class="error-title" id="errorTitle">Location Not Found</h4>
+        <p class="error-desc" id="errorDesc">Could not find weather data for the specified query. Please check your spelling and try again.</p>
+      </div>
+      <button type="button" class="btn-error-dismiss" id="dismissErrorBtn" aria-label="Dismiss error banner">✕</button>
+    </div>
+
+    <!-- Loading Skeleton Overlay (Visible during API fetch) -->
+    <div class="loading-state-wrapper" id="loadingState" style="display: none;">
+      <div class="spinner-pulse"></div>
+      <p class="loading-msg" id="loadingMsg">Fetching live meteorological telemetry...</p>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid" id="dashboardMain">
+      
+      <!-- TOP SECTION: BALANCED 2-COLUMN ARRANGEMENT -->
+      <div class="dashboard-top-section">
+        
+        <!-- TOP LEFT: HERO CURRENT CARD & 24-HOUR TIMELINE -->
+        <div class="top-col-left">
+
+          <!-- 1. Current Weather Hero Card -->
+          <article class="weather-card hero-weather-card" id="heroWeatherCard">
+            <div class="hero-card-header">
+              <div class="location-meta">
+                <div class="location-row">
+                  <span class="geo-pin-icon">📍</span>
+                  <h2 class="current-city-name" id="currentCityName">New Delhi</h2>
+                  <span class="country-pill" id="currentCountryPill">IN</span>
+                  <button type="button" class="favorite-star-btn" id="favoriteToggleBtn" title="Save to Favorites" aria-label="Toggle Favorite">
+                    ★
+                  </button>
+                </div>
+                <p class="current-timestamp" id="currentTimestamp">Friday, 10 Oct 2026 · Local Time 09:30 AM</p>
+              </div>
+              
+              <div class="condition-badge-wrap">
+                <span class="condition-pill" id="currentConditionPill">Sunny & Clear</span>
+              </div>
+            </div>
+
+            <!-- Hero Main Temperature & Big Weather Icon Display -->
+            <div class="hero-temp-row">
+              <div class="temp-display-wrap">
+                <span class="huge-temp-val" id="currentTempVal">28</span>
+                <span class="temp-unit-symbol" id="currentTempUnit">°C</span>
+              </div>
+
+              <div class="hero-weather-visual" id="heroWeatherVisual">
+                <div class="visual-icon-glow"></div>
+                <div id="heroSvgContainer" class="hero-svg-box"></div>
+              </div>
+            </div>
+
+            <!-- High / Low / Feels Like Quick Summary Banner -->
+            <div class="hero-quick-stats">
+              <div class="stat-pill">
+                <span class="stat-label">Feels Like</span>
+                <strong class="stat-val" id="currentFeelsLikeVal">30°C</strong>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-pill">
+                <span class="stat-label">Day High</span>
+                <strong class="stat-val high" id="currentDayHighVal">32°C</strong>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-pill">
+                <span class="stat-label">Day Low</span>
+                <strong class="stat-val low" id="currentDayLowVal">21°C</strong>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-pill">
+                <span class="stat-label">Precipitation</span>
+                <strong class="stat-val" id="currentPrecipVal">0%</strong>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. 24-Hour Hourly Timeline Forecast Carousel -->
+          <section class="weather-card hourly-forecast-card" aria-label="Hourly Forecast Timeline">
+            <div class="card-section-header">
+              <div class="title-with-icon">
+                <span class="section-icon">⏱️</span>
+                <h3 class="section-title">24-Hour Timeline Forecast</h3>
+              </div>
+              <span class="scroll-hint-label">Scroll horizontal ➔</span>
+            </div>
+
+            <div class="hourly-timeline-carousel" id="hourlyTimelineContainer" role="region" aria-label="Hourly timeline">
+              <!-- Dynamically injected hourly items via app.js -->
+            </div>
+          </section>
+
+        </div>
+
+        <!-- TOP RIGHT: 5-DAY EXTENDED FORECAST -->
+        <div class="top-col-right">
+          <section class="weather-card fiveday-forecast-card" aria-label="5-Day Weather Forecast">
+            <div class="card-section-header">
+              <div class="title-with-icon">
+                <span class="section-icon">📅</span>
+                <h3 class="section-title">5-Day Extended Forecast</h3>
+              </div>
+              <span class="sub-caption-label">Daily Outlook & Rain Chances</span>
+            </div>
+
+            <div class="fiveday-list" id="fiveDayListContainer">
+              <!-- Dynamically injected 5-day items via app.js -->
+            </div>
+          </section>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM SECTION: FULL-WIDTH ATMOSPHERIC METRICS BENTO GRID -->
+      <section class="bento-section" aria-label="Atmospheric Metrics">
+        <div class="bento-section-header">
+          <div class="title-with-icon">
+            <span class="section-icon">⚡</span>
+            <h3 class="section-title">Atmospheric Telemetry & Meteorological Metrics</h3>
+          </div>
+          <span class="sub-caption-label">Real-Time Sensor Readouts</span>
+        </div>
+
+        <div class="bento-metrics-grid">
+          
+          <!-- Bento Metric 1: Air Quality Index (AQI) -->
+          <div class="bento-card bento-aqi">
+            <div class="bento-header">
+              <span class="bento-title">Air Quality Index</span>
+              <span class="bento-icon">🍃</span>
+            </div>
+            <div class="bento-main">
+              <div class="aqi-level-badge" id="aqiBadge">Good (AQI 32)</div>
+              <p class="aqi-desc" id="aqiDesc">Air quality is satisfactory and poses little to no risk.</p>
+              <div class="aqi-meter-bar">
+                <div class="aqi-fill" id="aqiFillBar" style="width: 25%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Metric 2: Wind Speed & Compass Direction -->
+          <div class="bento-card bento-wind">
+            <div class="bento-header">
+              <span class="bento-title">Wind & Gusts</span>
+              <span class="bento-icon">💨</span>
+            </div>
+            <div class="bento-main bento-wind-content">
+              <div class="wind-readout">
+                <div class="wind-speed-val" id="windSpeedVal">12 <span class="wind-unit">km/h</span></div>
+                <div class="wind-direction-text" id="windDirText">North-East (45°)</div>
+              </div>
+              <div class="compass-dial" id="compassDial" title="Wind Direction">
+                <div class="compass-marker n">N</div>
+                <div class="compass-marker e">E</div>
+                <div class="compass-marker s">S</div>
+                <div class="compass-marker w">W</div>
+                <div class="compass-needle" id="compassNeedle"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Metric 3: UV Radiation Index -->
+          <div class="bento-card bento-uv">
+            <div class="bento-header">
+              <span class="bento-title">UV Index</span>
+              <span class="bento-icon">☀️</span>
+            </div>
+            <div class="bento-main">
+              <div class="uv-number-row">
+                <span class="uv-score" id="uvScoreVal">5.4</span>
+                <span class="uv-tag moderate" id="uvRiskTag">Moderate</span>
+              </div>
+              <p class="bento-subtext" id="uvAdviceText">Wear sunglasses and SPF 30+ sunscreen if outdoors.</p>
+              <div class="uv-meter-track">
+                <div class="uv-indicator-dot" id="uvIndicatorDot" style="left: 45%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Metric 4: Humidity & Dew Point -->
+          <div class="bento-card bento-humidity">
+            <div class="bento-header">
+              <span class="bento-title">Humidity</span>
+              <span class="bento-icon">💧</span>
+            </div>
+            <div class="bento-main">
+              <div class="humidity-val-row">
+                <span class="humidity-num" id="humidityNum">58%</span>
+              </div>
+              <p class="bento-subtext" id="dewPointText">The dew point is 18°C right now.</p>
+              <div class="humidity-meter-track">
+                <div class="humidity-meter-fill" id="humidityMeterFill" style="width: 58%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Metric 5: Sunrise & Sunset Trajectory Arc -->
+          <div class="bento-card bento-sun-arc span-two">
+            <div class="bento-header">
+              <span class="bento-title">Sun Position & Daylight Arc</span>
+              <span class="bento-icon">🌅</span>
+            </div>
+            <div class="sun-arc-container">
+              <svg class="sun-arc-svg" viewBox="0 0 280 100" fill="none">
+                <path d="M 20 85 Q 140 10 260 85" stroke="var(--border-subtle)" stroke-width="3" stroke-dasharray="4 4" fill="none"></path>
+                <path id="sunArcActivePath" d="M 20 85 Q 140 10 260 85" stroke="url(#sunArcGrad)" stroke-width="3.5" fill="none"></path>
+                <defs>
+                  <linearGradient id="sunArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f59e0b" />
+                    <stop offset="100%" stop-color="#ec4899" />
+                  </linearGradient>
+                </defs>
+                <circle id="sunMarkerCircle" cx="140" cy="48" r="7" fill="#fbbf24" stroke="#ffffff" stroke-width="2.5"></circle>
+              </svg>
+              <div class="sun-times-row">
+                <div class="sun-time-item">
+                  <span class="sun-label">Sunrise</span>
+                  <strong class="sun-val" id="sunriseTimeVal">06:14 AM</strong>
+                </div>
+                <div class="sun-time-item center">
+                  <span class="sun-label">Daylight Remaining</span>
+                  <strong class="sun-val text-accent" id="daylightRemainVal">8h 45m</strong>
+                </div>
+                <div class="sun-time-item right">
+                  <span class="sun-label">Sunset</span>
+                  <strong class="sun-val" id="sunsetTimeVal">06:48 PM</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Metric 6: Atmospheric Pressure -->
+          <div class="bento-card bento-pressure">
+            <div class="bento-header">
+              <span class="bento-title">Pressure</span>
+              <span class="bento-icon">⏱️</span>
+            </div>
+            <div class="bento-main">
+              <div class="metric-single-num" id="pressureVal">1014 <span class="metric-unit">hPa</span></div>
+              <p class="bento-subtext" id="pressureDesc">Normal sea-level barometric pressure.</p>
+            </div>
+          </div>
+
+          <!-- Bento Metric 7: Visibility Distance -->
+          <div class="bento-card bento-visibility">
+            <div class="bento-header">
+              <span class="bento-title">Visibility</span>
+              <span class="bento-icon">👁️</span>
+            </div>
+            <div class="bento-main">
+              <div class="metric-single-num" id="visibilityVal">10 <span class="metric-unit">km</span></div>
+              <p class="bento-subtext" id="visibilityDesc">Clear optical visibility across the horizon.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <p class="footer-attribution">
+          <strong>AtmosphereLive</strong> · Real-Time Weather Dashboard powered by Async Fetch API & 60fps Dynamic Particle Physics.
+          <br>InternCircle Virtual Internship Project · Created by <strong>Upasana Kudape</strong>
+        </p>
+        <div class="footer-meta-tags">
+          <span class="tag-chip">60fps Dynamic Canvas FX</span>
+          <span class="tag-chip">Vanilla JS fetch/async-await</span>
+          <span class="tag-chip">Zero API Keys Required</span>
+          <span class="tag-chip">Clean Responsive Bento Layout</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -3,6 +3,14 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/weather_dashboard",
+      "destination": "/InternCircle_virtual_internship/weather_dashboard/index.html"
+    },
+    {
+      "source": "/weather_dashboard/(.*)",
+      "destination": "/InternCircle_virtual_internship/weather_dashboard/$1"
+    },
+    {
       "source": "/pricing_cards",
       "destination": "/InternCircle_virtual_internship/pricing_cards/index.html"
     },
