@@ -17,16 +17,18 @@
 </head>
 <body>
 
-  <!-- Full-Screen Dynamic Weather Animation Canvas Layer -->
-  <canvas id="weatherFxCanvas" class="weather-fx-canvas" aria-hidden="true"></canvas>
 
-  <!-- Ambient Dynamic Weather Atmosphere Backdrop -->
-  <div class="ambient-backdrop" id="ambientBackdrop" aria-hidden="true">
-    <div class="weather-orb orb-1"></div>
-    <div class="weather-orb orb-2"></div>
-    <div class="weather-orb orb-3"></div>
+  <!-- Fullscreen Weather Video Background Layer -->
+  <div class="video-bg-layer" id="videoBgLayer" aria-hidden="true">
+    <!-- Two video elements for smooth A/B crossfade transitions -->
+    <video id="videoBgA" class="weather-video" autoplay muted loop playsinline></video>
+    <video id="videoBgB" class="weather-video" autoplay muted loop playsinline></video>
+    <!-- Dark overlay to keep UI cards legible over video -->
+    <div class="video-overlay" id="videoOverlay"></div>
+    <!-- Lightning canvas kept ONLY for thunderstorm mode -->
+    <canvas id="weatherFxCanvas" class="weather-fx-canvas" aria-hidden="true"></canvas>
+    <!-- Lightning flash overlay -->
     <div class="lightning-flash-overlay" id="lightningFlashOverlay"></div>
-    <div class="sunbeam-rays-overlay" id="sunbeamRaysOverlay"></div>
   </div>
 
   <!-- Main App Container -->
@@ -114,11 +116,12 @@
           Background FX Mood:
         </span>
         <div class="scene-chips-scroll" id="sceneChipsScroll">
-          <button type="button" class="scene-btn active" data-scene="clear">☀️ Clear & Sunbeams</button>
-          <button type="button" class="scene-btn" data-scene="rain">🌧️ Rain & Splashes</button>
+          <button type="button" class="scene-btn active" data-scene="clear">☀️ Sunny Day</button>
+          <button type="button" class="scene-btn" data-scene="clear-night">🌙 Clear Night</button>
+          <button type="button" class="scene-btn" data-scene="rain">🌧️ Rainy</button>
           <button type="button" class="scene-btn" data-scene="thunderstorm">⛈️ Lightning Storm</button>
-          <button type="button" class="scene-btn" data-scene="snow">❄️ Drifting Snow</button>
-          <button type="button" class="scene-btn" data-scene="clouds">☁️ Overcast & Fog</button>
+          <button type="button" class="scene-btn" data-scene="snow">❄️ Snowy</button>
+          <button type="button" class="scene-btn" data-scene="clouds">☁️ Cloudy</button>
         </div>
       </div>
     </section>
@@ -140,7 +143,7 @@
 
     <!-- Recent Searches & Favorites Bar -->
     <div class="recent-searches-bar" id="recentSearchesBar" style="display: none;">
-      <span class="recent-label">★ Saved Favorites:</span>
+      <span class="recent-label">🕐 Recent Searches:</span>
       <div class="recent-chips" id="recentChipsContainer"></div>
       <button type="button" class="btn-clear-recent" id="clearRecentBtn" title="Clear saved history">Clear</button>
     </div>

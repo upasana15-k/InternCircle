@@ -60,52 +60,156 @@
   --transition-spring: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Dynamic Themes based on Weather Mood */
-[data-weather="clear"] {
-  --bg-app: #080d1a;
-  --bg-gradient-1: #0f1c3f;
-  --bg-gradient-2: #1e293b;
-  --orb-color-1: rgba(245, 158, 11, 0.32);
-  --orb-color-2: rgba(56, 189, 248, 0.25);
-  --orb-color-3: rgba(251, 146, 60, 0.2);
+/* ==========================================================================
+   AUTOMATIC WEATHER-DRIVEN FULL UI THEMES
+   Theme shifts entirely based on live weather at the searched location.
+   Each condition overrides the full design token set: backgrounds, glass
+   surfaces, accent colours, borders, shadows and typography tints.
+   Smooth 1.2s transition on all colour properties gives a cinematic feel.
+   ========================================================================== */
+
+/* Global smooth colour transition on the html element */
+html {
+  transition:
+    background-color 1.2s ease,
+    color 0.6s ease;
 }
 
+/* ── ☀️  CLEAR / SUNNY — Warm Golden Hour ───────────────────────────────── */
+[data-weather="clear"] {
+  /* Backgrounds */
+  --bg-app: #07100e;
+  --bg-gradient-1: #0d1f10;
+  --bg-gradient-2: #1a2e12;
+  /* Orbs: amber sun + golden sky */
+  --orb-color-1: rgba(251, 191, 36, 0.38);
+  --orb-color-2: rgba(245, 158, 11, 0.30);
+  --orb-color-3: rgba(234, 179, 8,  0.22);
+  /* Glass surfaces */
+  --glass-card:         rgba(10, 20, 8,  0.76);
+  --glass-card-hover:   rgba(18, 34, 14, 0.88);
+  --glass-subtle:       rgba(251, 191, 36, 0.06);
+  --glass-border:       rgba(251, 191, 36, 0.20);
+  --glass-border-hover: rgba(251, 191, 36, 0.50);
+  --glass-highlight:    rgba(251, 191, 36, 0.10);
+  /* Accents */
+  --accent-sky:      #fbbf24;
+  --accent-sun:      #f59e0b;
+  --accent-sun-glow: rgba(251, 191, 36, 0.50);
+  /* Shadows */
+  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.55), 0 0 1px 1px rgba(251,191,36,0.14);
+  --shadow-hero: 0 24px 50px -12px rgba(0,0,0,0.75), 0 0 0 1px rgba(251,191,36,0.20);
+}
+
+/* ── 🌧️  RAIN / DRIZZLE — Deep Ocean Blue ──────────────────────────────── */
 [data-weather="rain"],
 [data-weather="drizzle"] {
-  --bg-app: #060e1d;
-  --bg-gradient-1: #091734;
-  --bg-gradient-2: #172554;
-  --orb-color-1: rgba(59, 130, 246, 0.35);
-  --orb-color-2: rgba(14, 165, 233, 0.28);
-  --orb-color-3: rgba(99, 102, 241, 0.22);
+  --bg-app: #020b18;
+  --bg-gradient-1: #041527;
+  --bg-gradient-2: #072040;
+  --orb-color-1: rgba(59,  130, 246, 0.40);
+  --orb-color-2: rgba(14,  165, 233, 0.32);
+  --orb-color-3: rgba(99,  102, 241, 0.25);
+  --glass-card:         rgba(2,  14, 30,  0.80);
+  --glass-card-hover:   rgba(5,  25, 50,  0.90);
+  --glass-subtle:       rgba(59, 130, 246, 0.07);
+  --glass-border:       rgba(59, 130, 246, 0.22);
+  --glass-border-hover: rgba(59, 130, 246, 0.55);
+  --glass-highlight:    rgba(59, 130, 246, 0.10);
+  --accent-sky:      #60a5fa;
+  --accent-sun:      #38bdf8;
+  --accent-sun-glow: rgba(56, 189, 248, 0.45);
+  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.60), 0 0 1px 1px rgba(59,130,246,0.14);
+  --shadow-hero: 0 24px 50px -12px rgba(0,0,0,0.80), 0 0 0 1px rgba(59,130,246,0.22);
 }
 
+/* ── ⛈️  THUNDERSTORM — Electric Violet ─────────────────────────────────── */
 [data-weather="thunderstorm"] {
-  --bg-app: #090618;
-  --bg-gradient-1: #160d35;
-  --bg-gradient-2: #0b0922;
-  --orb-color-1: rgba(168, 85, 247, 0.38);
-  --orb-color-2: rgba(236, 72, 153, 0.25);
-  --orb-color-3: rgba(59, 130, 246, 0.32);
+  --bg-app: #060310;
+  --bg-gradient-1: #12082a;
+  --bg-gradient-2: #0e0620;
+  --orb-color-1: rgba(168,  85, 247, 0.45);
+  --orb-color-2: rgba(236,  72, 153, 0.30);
+  --orb-color-3: rgba(99,  102, 241, 0.35);
+  --glass-card:         rgba(10, 5,  26,  0.82);
+  --glass-card-hover:   rgba(20, 10, 45,  0.92);
+  --glass-subtle:       rgba(168, 85, 247, 0.07);
+  --glass-border:       rgba(168, 85, 247, 0.25);
+  --glass-border-hover: rgba(168, 85, 247, 0.60);
+  --glass-highlight:    rgba(168, 85, 247, 0.12);
+  --accent-sky:      #c084fc;
+  --accent-sun:      #a855f7;
+  --accent-sun-glow: rgba(168, 85, 247, 0.50);
+  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.65), 0 0 1px 1px rgba(168,85,247,0.18);
+  --shadow-hero: 0 24px 50px -12px rgba(0,0,0,0.85), 0 0 0 1px rgba(168,85,247,0.28);
 }
 
+/* ── ❄️  SNOW — Arctic Ice ───────────────────────────────────────────────── */
 [data-weather="snow"] {
-  --bg-app: #08121f;
-  --bg-gradient-1: #0e2038;
-  --bg-gradient-2: #182e4e;
-  --orb-color-1: rgba(224, 242, 254, 0.32);
-  --orb-color-2: rgba(186, 230, 253, 0.25);
-  --orb-color-3: rgba(147, 197, 253, 0.22);
+  --bg-app: #040d18;
+  --bg-gradient-1: #081a30;
+  --bg-gradient-2: #0e2645;
+  --orb-color-1: rgba(186, 230, 253, 0.38);
+  --orb-color-2: rgba(147, 197, 253, 0.30);
+  --orb-color-3: rgba(224, 242, 254, 0.25);
+  --glass-card:         rgba(5,  18, 36,  0.78);
+  --glass-card-hover:   rgba(10, 30, 56,  0.88);
+  --glass-subtle:       rgba(186, 230, 253, 0.07);
+  --glass-border:       rgba(186, 230, 253, 0.25);
+  --glass-border-hover: rgba(186, 230, 253, 0.60);
+  --glass-highlight:    rgba(224, 242, 254, 0.12);
+  --text-secondary: #bae6fd;
+  --text-muted:     #93c5fd;
+  --accent-sky:      #e0f2fe;
+  --accent-sun:      #bae6fd;
+  --accent-sun-glow: rgba(186, 230, 253, 0.55);
+  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.55), 0 0 1px 1px rgba(186,230,253,0.18);
+  --shadow-hero: 0 24px 50px -12px rgba(0,0,0,0.75), 0 0 0 1px rgba(186,230,253,0.28);
 }
 
+/* ── ☁️  CLOUDS / FOG — Steel Overcast ──────────────────────────────────── */
 [data-weather="clouds"] {
-  --bg-app: #0a0e17;
-  --bg-gradient-1: #121a29;
-  --bg-gradient-2: #1e293b;
-  --orb-color-1: rgba(148, 163, 184, 0.25);
-  --orb-color-2: rgba(71, 85, 105, 0.35);
-  --orb-color-3: rgba(100, 116, 139, 0.2);
+  --bg-app: #080c14;
+  --bg-gradient-1: #10151f;
+  --bg-gradient-2: #1a2130;
+  --orb-color-1: rgba(100, 116, 139, 0.30);
+  --orb-color-2: rgba(71,  85,  105, 0.40);
+  --orb-color-3: rgba(148, 163, 184, 0.22);
+  --glass-card:         rgba(10, 14, 22,  0.78);
+  --glass-card-hover:   rgba(18, 24, 38,  0.88);
+  --glass-subtle:       rgba(148, 163, 184, 0.06);
+  --glass-border:       rgba(148, 163, 184, 0.20);
+  --glass-border-hover: rgba(148, 163, 184, 0.45);
+  --glass-highlight:    rgba(148, 163, 184, 0.08);
+  --accent-sky:      #94a3b8;
+  --accent-sun:      #64748b;
+  --accent-sun-glow: rgba(100, 116, 139, 0.40);
+  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.55), 0 0 1px 1px rgba(148,163,184,0.10);
+  --shadow-hero: 0 24px 50px -12px rgba(0,0,0,0.75), 0 0 0 1px rgba(148,163,184,0.16);
 }
+
+/* ── 🌙  CLEAR NIGHT — Deep Midnight & Moonlit Indigo ────────────────────── */
+[data-weather="clear-night"] {
+  --bg-app: #030712;
+  --bg-gradient-1: #070d1e;
+  --bg-gradient-2: #0f172a;
+  --orb-color-1: rgba(99, 102, 241, 0.35);
+  --orb-color-2: rgba(129, 140, 248, 0.25);
+  --orb-color-3: rgba(56, 189, 248, 0.18);
+  --glass-card:         rgba(7, 12, 26, 0.80);
+  --glass-card-hover:   rgba(15, 23, 42, 0.90);
+  --glass-subtle:       rgba(129, 140, 248, 0.06);
+  --glass-border:       rgba(129, 140, 248, 0.22);
+  --glass-border-hover: rgba(129, 140, 248, 0.55);
+  --glass-highlight:    rgba(129, 140, 248, 0.10);
+  --accent-sky:      #a5b4fc;
+  --accent-sun:      #818cf8;
+  --accent-sun-glow: rgba(129, 140, 248, 0.45);
+  --shadow-card: 0 16px 36px -10px rgba(0,0,0,0.65), 0 0 1px 1px rgba(129,140,248,0.14);
+  --shadow-hero: 0 24px 50px -12px rgba(0,0,0,0.85), 0 0 0 1px rgba(129,140,248,0.22);
+}
+
+
 
 /* --------------------------------------------------------------------------
    Base & Reset
@@ -120,6 +224,10 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100%;
+  /* Smooth cinematic transition when weather theme changes */
+  transition: background-color 1.2s ease;
 }
 
 body {
@@ -130,74 +238,92 @@ body {
   line-height: 1.5;
   overflow-x: hidden;
   position: relative;
-  /* Prevent zoomed-out look on very wide monitors */
   min-width: 0;
+  width: 100%;
 }
+
 
 /* --------------------------------------------------------------------------
-   Dynamic Weather Particle FX Canvas (Full-Screen 60fps)
+   Fullscreen Weather Video Background System
    -------------------------------------------------------------------------- */
-.weather-fx-canvas {
+.video-bg-layer {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1; /* Sits behind UI cards */
-}
-
-/* Ambient Animated Atmosphere Background */
-.ambient-backdrop {
-  position: fixed;
-  inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: radial-gradient(circle at top center, var(--bg-gradient-1), var(--bg-app) 80%);
-  transition: background 1.4s ease;
 }
 
-.weather-orb {
+/* Both video elements sit on top of each other for A/B crossfade */
+.weather-video {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(140px);
-  opacity: 0.85;
-  animation: orbDrift 22s infinite alternate ease-in-out;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
 }
 
-.orb-1 {
-  width: 620px;
-  height: 620px;
-  background: var(--orb-color-1);
-  top: -160px;
-  left: 12%;
-  animation-duration: 20s;
+/* Active video is fully visible */
+.weather-video.active {
+  opacity: 1;
 }
 
-.orb-2 {
-  width: 520px;
-  height: 520px;
-  background: var(--orb-color-2);
-  top: 25%;
-  right: -80px;
-  animation-duration: 26s;
-  animation-delay: -6s;
+/* Dark cinematic overlay — keeps glass cards legible over bright video */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.30) 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  z-index: 1;
+  transition: background 1.2s ease;
 }
 
-.orb-3 {
-  width: 540px;
-  height: 540px;
-  background: var(--orb-color-3);
-  bottom: -120px;
-  left: 20%;
-  animation-duration: 24s;
-  animation-delay: -12s;
+/* Slightly darker overlay for snow/clouds/night so text stays crisp */
+[data-weather="snow"] .video-overlay,
+[data-weather="clouds"] .video-overlay,
+[data-weather="clear-night"] .video-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.52) 0%,
+    rgba(0, 0, 0, 0.38) 40%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
 }
 
-@keyframes orbDrift {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(70px, 45px) scale(1.12); }
-  100% { transform: translate(-50px, 80px) scale(0.94); }
+/* Thunderstorm: deep purple tint overlay (no video) */
+[data-weather="thunderstorm"] .video-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 3, 30, 0.72) 0%,
+    rgba(10, 3, 30, 0.55) 40%,
+    rgba(10, 3, 30, 0.78) 100%
+  );
+}
+
+/* Lightning canvas: hidden by default, only shown for thunderstorm */
+.weather-fx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+[data-weather="thunderstorm"] .weather-fx-canvas {
+  opacity: 1;
 }
 
 /* Lightning Flash Overlay */
@@ -207,43 +333,19 @@ body {
   background: rgba(255, 255, 255, 0.75);
   opacity: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
   transition: opacity 0.08s ease;
 }
 
-/* Sunbeam Rays Overlay (Active in Clear Weather) */
-.sunbeam-rays-overlay {
-  position: fixed;
-  top: -200px;
-  left: -200px;
-  width: 800px;
-  height: 800px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(245, 158, 11, 0.04) 50%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-  animation: sunbeamPulse 8s infinite alternate ease-in-out;
-  opacity: 0;
-  transition: opacity 1s ease;
-}
-
-[data-weather="clear"] .sunbeam-rays-overlay {
-  opacity: 0.85;
-}
-
-@keyframes sunbeamPulse {
-  0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
-  100% { transform: scale(1.25) rotate(45deg); opacity: 1; }
-}
 
 /* --------------------------------------------------------------------------
    App Wrapper & Layout Container
    -------------------------------------------------------------------------- */
 .app-wrapper {
-  max-width: 1320px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 20px 24px 44px;
+  padding: 14px 18px 36px;
   position: relative;
   z-index: 10; /* Keeps all cards sharply interactive over canvas */
   box-sizing: border-box;
@@ -256,22 +358,28 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 14px 22px;
+  gap: 14px;
+  padding: 12px 18px;
   background: var(--glass-card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1500; /* Elevated stacking context: keeps live search dropdown completely in front of all lower sections */
 }
 
 .header-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
+  min-width: 0;
 }
 
 .brand-icon-box {
@@ -326,9 +434,10 @@ body {
 
 /* Search Bar & Autocomplete */
 .search-container {
-  flex: 1;
-  max-width: 580px;
+  min-width: 0; /* Critical: allow flex child to shrink below content size */
+  width: 100%;
   position: relative;
+  z-index: 1501;
 }
 
 .search-form {
@@ -426,47 +535,95 @@ body {
   top: calc(100% + 8px);
   left: 0;
   right: 0;
-  background: rgba(15, 23, 42, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border-hover);
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(56, 189, 248, 0.15);
   list-style: none;
-  z-index: 1000;
-  overflow: hidden;
-  max-height: 280px;
+  z-index: 99999;
+  max-height: 320px;
   overflow-y: auto;
+  overflow-x: hidden;
+  padding: 6px 0;
+}
+
+.autocomplete-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.autocomplete-list::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-sky);
 }
 
 .autocomplete-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 18px;
+  gap: 12px;
+  padding: 11px 16px;
   cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.9rem;
   color: var(--text-primary);
-  transition: background var(--transition-fast);
+  transition: background 0.15s ease;
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
 }
 
 .autocomplete-item:hover,
 .autocomplete-item.active {
-  background: rgba(56, 189, 248, 0.14);
+  background: rgba(56, 189, 248, 0.16);
 }
 
-.item-city-name strong {
-  color: var(--text-bright);
+.item-text-group {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.item-city-name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.item-admin-name {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item-country-badge {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
   font-family: var(--font-mono);
-  color: var(--text-muted);
-  background: var(--glass-subtle);
-  padding: 2px 6px;
+  color: var(--accent-sky);
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 2px 7px;
   border-radius: 4px;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
 }
 
 /* Header Units Toggle & Refresh */
@@ -538,9 +695,13 @@ body {
   backdrop-filter: blur(14px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  padding: 10px 18px;
-  margin-bottom: 12px;
+  padding: 8px 16px;
+  margin-bottom: 10px;
   box-shadow: var(--shadow-card);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .scene-bar-inner {
@@ -549,6 +710,9 @@ body {
   gap: 12px;
   overflow-x: auto;
   scrollbar-width: none;
+  max-width: 100%;
+  width: 100%;
+  min-width: 0;
 }
 
 .scene-bar-inner::-webkit-scrollbar {
@@ -586,6 +750,9 @@ body {
   gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
+  max-width: 100%;
+  min-width: 0;
+  flex: 1;
 }
 
 .scene-btn {
@@ -622,10 +789,13 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   overflow-x: auto;
   padding: 2px 2px 6px;
   scrollbar-width: none;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .quick-cities-bar::-webkit-scrollbar {
@@ -646,6 +816,9 @@ body {
   gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
+  max-width: 100%;
+  min-width: 0;
+  flex: 1;
 }
 
 .city-chip {
@@ -779,26 +952,37 @@ body {
 .dashboard-grid {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
+  width: 100%;
+  min-width: 0;
 }
 
 /* 1. TOP SECTION (SIDE-BY-SIDE 2-COLUMN) */
 .dashboard-top-section {
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 18px;
   align-items: stretch;
+  width: 100%;
+  min-width: 0;
 }
 
 .top-col-left {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden; /* Critical: prevent child carousels from expanding grid column */
 }
 
 .top-col-right {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
 }
 
 /* Weather Card Glass Container */
@@ -808,11 +992,15 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
-  padding: 24px 26px;
+  padding: 20px 22px;
   box-shadow: var(--shadow-card);
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .weather-card:hover {
@@ -831,13 +1019,26 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 8px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.location-meta {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .location-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .geo-pin-icon {
@@ -846,10 +1047,14 @@ body {
 
 .current-city-name {
   font-family: var(--font-display);
-  font-size: 1.95rem;
+  font-size: clamp(1.2rem, 4vw, 1.95rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .country-pill {
@@ -975,12 +1180,17 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: 12px 18px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .stat-pill {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
 .stat-label {
@@ -1040,6 +1250,13 @@ body {
   color: var(--text-muted);
 }
 
+.hourly-forecast-card {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
 .hourly-timeline-carousel {
   display: flex;
   gap: 10px;
@@ -1048,6 +1265,9 @@ body {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
   cursor: grab;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .hourly-timeline-carousel.grabbing {
@@ -1129,6 +1349,9 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
 }
 
 .fiveday-list {
@@ -1137,11 +1360,14 @@ body {
   gap: 10px;
   flex: 1;
   justify-content: space-between;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
 }
 
 .fiveday-row {
   display: grid;
-  grid-template-columns: 88px 32px 1fr 120px;
+  grid-template-columns: 84px 30px minmax(0, 1fr) 115px;
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
@@ -1149,6 +1375,10 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .fiveday-row:hover {
@@ -1230,7 +1460,9 @@ body {
 .bento-section {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
 }
 
 .bento-section-header {
@@ -1241,8 +1473,10 @@ body {
 
 .bento-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
 }
 
 .bento-card {
@@ -1250,12 +1484,15 @@ body {
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
-  padding: 18px 20px;
+  padding: 16px 18px;
   box-shadow: var(--shadow-card);
   transition: all var(--transition-fast);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .bento-card:hover {
@@ -1585,139 +1822,127 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Responsive Layout — Full Multi-Breakpoint System
-   Covers: 1280px · 1100px · 900px · 768px · 480px · 360px
+   Responsive Layout — Multi-Breakpoint System
+   Covers: 1200px · 1024px · 880px · 680px · 480px · 360px
    -------------------------------------------------------------------------- */
 
-/* ── 1280px: Tighten large desktop slightly ── */
-@media (max-width: 1280px) {
+/* ── 1200px: Compact Laptop / Desktop ── */
+@media (max-width: 1200px) {
   .app-wrapper {
-    padding: 16px 18px 40px;
+    padding: 14px 16px 36px;
   }
 
   .huge-temp-val {
-    font-size: 4.2rem;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
   }
 
   .bento-metrics-grid {
-    grid-template-columns: repeat(4, 1fr);
     gap: 12px;
   }
 }
 
-/* ── 1100px: Switch top section to single column ── */
-@media (max-width: 1100px) {
+/* ── 1024px: Tablet Landscape / Small Laptop ── */
+@media (max-width: 1024px) {
   .dashboard-top-section {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .weather-card {
+    padding: 16px 18px;
+  }
+
+  .fiveday-row {
+    grid-template-columns: 74px 26px minmax(0, 1fr) 95px;
+    gap: 8px;
+    padding: 7px 10px;
+  }
+
+  .range-min,
+  .range-max {
+    font-size: 0.78rem;
+    width: 24px;
   }
 
   .bento-metrics-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .bento-card.span-two {
+    grid-column: span 3;
+  }
+}
+
+/* ── 880px: Tablet Portrait & Large Phones (Two-Row Header & Single-Col Top) ── */
+@media (max-width: 880px) {
+  .app-header {
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .header-brand {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .header-actions {
+    flex-shrink: 0;
+  }
+
+  .search-container {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .dashboard-top-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .bento-metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .bento-card.span-two {
     grid-column: span 2;
   }
 
-  .huge-temp-val {
-    font-size: 4rem;
-  }
-}
-
-/* ── 900px: Tablet landscape ── */
-@media (max-width: 900px) {
-  .app-wrapper {
-    padding: 12px 14px 36px;
-  }
-
-  .app-header {
-    flex-wrap: wrap;
-    padding: 12px 16px;
-    gap: 10px;
-  }
-
-  .search-container {
-    order: 3;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .header-brand {
-    flex: 1;
-  }
-
-  .huge-temp-val {
-    font-size: 3.6rem;
-  }
-
-  .hero-weather-visual {
-    width: 110px;
-    height: 110px;
-  }
-
-  .hero-svg-box svg {
-    width: 95px;
-    height: 95px;
-  }
-
-  .weather-card {
-    padding: 18px 20px;
-  }
-
-  .bento-metrics-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
-  .bento-card {
-    padding: 14px 16px;
-  }
-
-  .scene-presets-bar {
-    padding: 8px 12px;
-  }
-
   .fiveday-row {
-    grid-template-columns: 76px 28px 1fr 100px;
-    gap: 8px;
-    padding: 8px 10px;
+    grid-template-columns: 76px 28px minmax(0, 1fr) 100px;
   }
 }
 
-/* ── 768px: Tablet portrait / large phones ── */
-@media (max-width: 768px) {
+/* ── 680px: Phablets / Foldables ── */
+@media (max-width: 680px) {
   .app-wrapper {
-    padding: 10px 10px 32px;
-  }
-
-  .brand-title {
-    font-size: 1.1rem;
+    padding: 10px 10px 28px;
   }
 
   .brand-badge {
     display: none;
   }
 
-  .huge-temp-val {
-    font-size: 3.2rem;
+  .brand-title {
+    font-size: 1.15rem;
   }
 
-  .temp-unit-symbol {
-    font-size: 1.7rem;
+  .huge-temp-val {
+    font-size: clamp(2.2rem, 8vw, 3.4rem);
   }
 
   .hero-weather-visual {
-    width: 90px;
-    height: 90px;
+    width: 95px;
+    height: 95px;
   }
 
   .hero-svg-box svg {
-    width: 80px;
-    height: 80px;
-  }
-
-  .current-city-name {
-    font-size: 1.5rem;
+    width: 85px;
+    height: 85px;
   }
 
   .hero-quick-stats {
@@ -1732,20 +1957,7 @@ body {
   }
 
   .stat-val {
-    font-size: 0.9rem;
-  }
-
-  .bento-metrics-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .bento-card.span-two {
-    grid-column: span 2;
-  }
-
-  .bento-card {
-    padding: 12px 14px;
+    font-size: 0.92rem;
   }
 
   .geo-text {
@@ -1760,34 +1972,20 @@ body {
     display: none;
   }
 
-  .fiveday-row {
-    grid-template-columns: 68px 24px 1fr 90px;
-    gap: 6px;
-    padding: 8px 10px;
-  }
-
-  .dashboard-grid {
-    gap: 14px;
-  }
-
-  .section-title {
-    font-size: 1rem;
-  }
-
   .hourly-item {
     flex: 0 0 68px;
     padding: 10px 4px;
   }
 }
 
-/* ── 480px: Standard phone portrait ── */
+/* ── 480px: Standard Mobile Phones ── */
 @media (max-width: 480px) {
   .app-wrapper {
-    padding: 8px 8px 28px;
+    padding: 8px 8px 24px;
   }
 
   .app-header {
-    padding: 10px 12px;
+    padding: 8px 10px;
     gap: 8px;
     border-radius: var(--radius-lg);
   }
@@ -1803,21 +2001,25 @@ body {
   }
 
   .brand-title {
-    font-size: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .city-search-input {
+    font-size: 0.84rem;
   }
 
   .city-search-input::placeholder {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
   }
 
   .unit-btn {
-    padding: 5px 10px;
+    padding: 4px 9px;
     font-size: 0.78rem;
   }
 
   .icon-action-btn {
-    width: 33px;
-    height: 33px;
+    width: 32px;
+    height: 32px;
   }
 
   .huge-temp-val {
@@ -1829,48 +2031,17 @@ body {
   }
 
   .current-city-name {
-    font-size: 1.25rem;
-  }
-
-  .current-timestamp {
-    font-size: 0.75rem;
-  }
-
-  .condition-pill {
-    font-size: 0.78rem;
-    padding: 4px 10px;
-  }
-
-  .hero-card-header {
-    margin-bottom: 14px;
+    font-size: 1.3rem;
   }
 
   .hero-weather-visual {
-    width: 76px;
-    height: 76px;
+    width: 80px;
+    height: 80px;
   }
 
   .hero-svg-box svg {
-    width: 66px;
-    height: 66px;
-  }
-
-  .visual-icon-glow {
-    width: 68px;
-    height: 68px;
-  }
-
-  .hero-quick-stats {
-    padding: 8px 10px;
-    gap: 6px;
-  }
-
-  .stat-label {
-    font-size: 0.66rem;
-  }
-
-  .stat-val {
-    font-size: 0.82rem;
+    width: 70px;
+    height: 70px;
   }
 
   .weather-card {
@@ -1879,34 +2050,27 @@ body {
   }
 
   .bento-metrics-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
 
-  .bento-card.span-two {
-    grid-column: span 2;
-  }
-
   .bento-card {
-    padding: 10px 12px;
+    padding: 12px 12px;
     border-radius: var(--radius-lg);
   }
 
   .bento-title {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
-  .metric-single-num {
+  .metric-single-num,
+  .uv-score,
+  .humidity-num {
     font-size: 1.35rem;
   }
 
   .wind-speed-val {
-    font-size: 1.3rem;
-  }
-
-  .uv-score,
-  .humidity-num {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
   }
 
   .compass-dial {
@@ -1919,9 +2083,9 @@ body {
   }
 
   .fiveday-row {
-    grid-template-columns: 58px 22px 1fr;
+    grid-template-columns: 60px 24px minmax(0, 1fr);
     gap: 6px;
-    padding: 6px 8px;
+    padding: 7px 8px;
   }
 
   .fiveday-range-bar-group {
@@ -1929,33 +2093,25 @@ body {
   }
 
   .hourly-item {
-    flex: 0 0 58px;
+    flex: 0 0 60px;
     padding: 8px 3px;
   }
 
   .hourly-time {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
   .hourly-temp {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
   }
 
   .section-title {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   .scroll-hint-label,
   .sub-caption-label {
     display: none;
-  }
-
-  .sun-arc-svg {
-    max-width: 100%;
-  }
-
-  .dashboard-grid {
-    gap: 10px;
   }
 
   .scene-presets-bar {
@@ -1967,36 +2123,32 @@ body {
     padding: 5px 10px;
   }
 
+  .city-chip {
+    font-size: 0.76rem;
+    padding: 5px 10px;
+  }
+
   .app-footer {
-    padding: 16px 14px;
-  }
-
-  .footer-meta-tags {
-    gap: 6px;
-  }
-
-  .tag-chip {
-    font-size: 0.66rem;
-    padding: 2px 6px;
+    padding: 16px 10px;
   }
 }
 
-/* ── 360px: Very small phones (Galaxy S8 etc.) ── */
+/* ── 360px: Small Mobile (Galaxy S8/S9, iPhone SE 1st gen) ── */
 @media (max-width: 360px) {
   .app-wrapper {
-    padding: 6px 6px 24px;
+    padding: 6px 6px 20px;
   }
 
   .huge-temp-val {
-    font-size: 2.4rem;
+    font-size: 2.3rem;
   }
 
   .current-city-name {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 
   .bento-metrics-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .bento-card.span-two {
@@ -2004,12 +2156,7 @@ body {
   }
 
   .hero-svg-box svg {
-    width: 56px;
-    height: 56px;
-  }
-
-  .geo-locate-btn {
-    padding: 5px 10px;
-    font-size: 0.74rem;
+    width: 58px;
+    height: 58px;
   }
 }
